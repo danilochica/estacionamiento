@@ -1,5 +1,7 @@
 package dominio.servicio;
 
+import dominio.modelo.VehiculoDTO;
+
 public class VigilanteServicio {
 	
 	public static final int CILINDRAJE_PARA_CALCULAR_RECARGO = 500;
@@ -13,6 +15,21 @@ public class VigilanteServicio {
 	public static final int RECARGO_POR_CILINDRAJE = 2000;
 	public static final int CAPACIDAD_MAXIMA_DE_CARROS = 20;
 	public static final int CAPACIDAD_MAXIMA_DE_MOTOS = 10;
+	
+	
+	public boolean verificarLetraInicialPlaca(VehiculoDTO vehiculo) {
+		char letraInicial = Character.toUpperCase(vehiculo.getPlaca().charAt(0));
+		if(String.valueOf(letraInicial).equals(LETRA_INICIAL_PLACA)) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
+	
+	
+	
+	
 	
 	
 

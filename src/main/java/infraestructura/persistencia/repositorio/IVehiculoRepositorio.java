@@ -15,8 +15,6 @@ public interface IVehiculoRepositorio extends CrudRepository<VehiculoEntidad, Lo
 	@Query (value = "FROM vehiculo v where v.estado = TRUE", nativeQuery = true)
 	List<VehiculoEntidad> obtenerVehiculosParqueados();
 	
-	//VehiculoEntidad findByPlaca(String placa);
-	
 	
 
 }
