@@ -8,7 +8,7 @@ import infraestructura.persistencia.entidad.VehiculoEntidad;
 public final class GestionParqueaderoBuilder {
 	
 	public static  GestionParqueaderoDTO convertirAModelo(GestionParqueaderoEntidad parqueaderoEntidad) {
-		VehiculoDTO vehiculoDTO = VehiculoBuilder.convertirAModelo(parqueaderoEntidad.getVehiculo());
+		VehiculoDTO vehiculoDTO = VehiculoBuilder.convertirAModelo(parqueaderoEntidad.getIdVehiculo());
 		GestionParqueaderoDTO parquederoDTO = new GestionParqueaderoDTO(parqueaderoEntidad.getIdTransaccion(), parqueaderoEntidad.getRegistroIngreso(), parqueaderoEntidad.getRegistroSalida(),  parqueaderoEntidad.getValorServicio(), parqueaderoEntidad.getEstado(), vehiculoDTO);
 		return parquederoDTO;
 	}

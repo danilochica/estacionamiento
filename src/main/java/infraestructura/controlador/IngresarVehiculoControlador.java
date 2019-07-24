@@ -2,9 +2,6 @@ package infraestructura.controlador;
 
 import java.util.List;
 
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import aplicacion.comando.comando.manejador.ManejadorCrearVehiculo;
 import dominio.modelo.VehiculoDTO;
 import infraestructura.persistencia.entidad.GestionParqueaderoEntidad;
-import infraestructura.persistencia.repositorio.IGestionParqueaderoRepositorio;
+import infraestructura.persistencia.repositorio.IGestionParqueaderoJPA;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -27,10 +24,10 @@ import infraestructura.persistencia.repositorio.IGestionParqueaderoRepositorio;
 public class IngresarVehiculoControlador {
 	
 	@Autowired
-	IGestionParqueaderoRepositorio gestionParqueaderoRepositorio;
+	IGestionParqueaderoJPA gestionParqueaderoRepositorio;
 	
 	ManejadorCrearVehiculo crearVehiculo;
-	
+	/*
 	@Produces (MediaType.APPLICATION_JSON)
 	@GetMapping(value = "/vehiculosParqueados")
 	public ResponseEntity<Object> vehiculosParqueados(){
@@ -41,6 +38,6 @@ public class IngresarVehiculoControlador {
 	@PostMapping
 	public void crear(@RequestBody VehiculoDTO vehiculo) {
 		this.crearVehiculo.ejecutar(vehiculo);
-	}
+	}*/
 
 }

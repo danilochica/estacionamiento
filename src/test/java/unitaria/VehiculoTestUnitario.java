@@ -1,4 +1,4 @@
-package dominio.unitaria;
+package unitaria;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,11 +10,11 @@ import org.mockito.Mockito;
 
 import dominio.modelo.VehiculoDTO;
 import dominio.servicio.IngresarVehiculoServicio;
-import infraestructura.persistencia.repositorio.IGestionParqueaderoRepositorio;
-import infraestructura.persistencia.repositorio.IVehiculoRepositorio;
+import infraestructura.persistencia.repositorio.IGestionParqueaderoJPA;
+import infraestructura.persistencia.repositorio.IVehiculoJPA;
 import testdatabuider.VehiculoTestDataBuilder;
 
-public class VehiculoTest {
+public class VehiculoTestUnitario {
 	
 	private static final String PLACA_CON_LETRA_A = "AEQ99D";
 	private static final String TIPO_VEHICULO_MOTO = "moto";
@@ -163,8 +163,8 @@ public class VehiculoTest {
 	@Test()
 	public void testCuandoElRegistroDelVehiculoEsExitoso() {
 		
-		IGestionParqueaderoRepositorio gestionParqueaderoRepositorio = mock(IGestionParqueaderoRepositorio.class);
-		IVehiculoRepositorio vehiculoRepositorio = mock(IVehiculoRepositorio.class);
+		IGestionParqueaderoJPA gestionParqueaderoRepositorio = mock(IGestionParqueaderoJPA.class);
+		IVehiculoJPA vehiculoRepositorio = mock(IVehiculoJPA.class);
 		
 		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
 		

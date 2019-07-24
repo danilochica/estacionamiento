@@ -1,6 +1,5 @@
 package infraestructura.persistencia.entidad;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,15 +7,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table (name = "GestionParqueadero")
-public class GestionParqueaderoEntidad implements Serializable{
+public class GestionParqueaderoEntidad{
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue
 	@Column (name = "ID_TRANSACCION", nullable = false)
@@ -34,8 +33,9 @@ public class GestionParqueaderoEntidad implements Serializable{
 	@Column (name = "ESTADO", nullable = false)
 	private Boolean estado;
 	
-	@Column (name = "VEHICULO", nullable = false)
-	private VehiculoEntidad vehiculo;
+	@ManyToOne
+	@JoinColumn(name = "ID_VEHICULO", nullable = false)
+	private VehiculoEntidad idVehiculo;
 
 	public GestionParqueaderoEntidad() {
 		
@@ -48,7 +48,7 @@ public class GestionParqueaderoEntidad implements Serializable{
 		this.registroSalida = registroSalida;
 		this.valorServicio = valorServicio;
 		this.estado = estado;
-		this.vehiculo = vehiculo;
+		this.idVehiculo = vehiculo;
 	}
 
 	public Long getIdTransaccion() {
@@ -91,15 +91,12 @@ public class GestionParqueaderoEntidad implements Serializable{
 		this.estado = estado;
 	}
 
-	public VehiculoEntidad getVehiculo() {
-		return vehiculo;
+	public VehiculoEntidad getIdVehiculo() {
+		return idVehiculo;
 	}
 
-	public void setVehiculo(VehiculoEntidad vehiculo) {
-		this.vehiculo = vehiculo;
+	public void setIdVehiculo(VehiculoEntidad idVehiculo) {
+		this.idVehiculo = idVehiculo;
 	}
-	
-	
-	
 	
 }

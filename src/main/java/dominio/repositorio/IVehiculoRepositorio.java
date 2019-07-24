@@ -5,7 +5,7 @@ import java.util.List;
 import dominio.modelo.GestionParqueaderoDTO;
 import dominio.modelo.VehiculoDTO;
 
-public interface IVigilanteRepositorio {
+public interface IVehiculoRepositorio {
 	
 	VehiculoDTO registrarVehiculoEnElSistema(VehiculoDTO vehicnuloDTO);
 	

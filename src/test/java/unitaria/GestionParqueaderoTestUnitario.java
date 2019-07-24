@@ -1,4 +1,4 @@
-package dominio.unitaria;
+package unitaria;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,7 +12,7 @@ import dominio.modelo.VehiculoDTO;
 import testdatabuider.GestionParqueaderoTestDataBuilder;
 import testdatabuider.VehiculoTestDataBuilder;
 
-public class GestionParqueaderoTest {
+public class GestionParqueaderoTestUnitario {
 	
 	private static final BigDecimal VALOR_SERVICIO = new BigDecimal(1000);
 	private static final boolean ESTADO_REGISTRO_PARQUEADERO = true;

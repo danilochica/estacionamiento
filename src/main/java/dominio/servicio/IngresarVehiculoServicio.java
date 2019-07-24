@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import dominio.excepcion.ExcepcionPlacaIniciaConA;
 import dominio.excepcion.ExcepecionNoHayCeldasDisponibles;
 import dominio.modelo.VehiculoDTO;
-import dominio.repositorio.IVigilanteRepositorio;
+import dominio.repositorio.IVehiculoRepositorio;
 import infraestructura.persistencia.builder.VehiculoBuilder;
-import infraestructura.persistencia.repositorio.IGestionParqueaderoRepositorio;
-import infraestructura.persistencia.repositorio.IVehiculoRepositorio;
+import infraestructura.persistencia.repositorio.IGestionParqueaderoJPA;
+import infraestructura.persistencia.repositorio.IVehiculoJPA;
 
 public class IngresarVehiculoServicio {
 	
@@ -24,15 +24,15 @@ public class IngresarVehiculoServicio {
 	public static final String PARQUEO_EXITOSO ="Registro exitoso";
 	
 	
-	IGestionParqueaderoRepositorio gestionParqueaderoRepositorio;
-	IVehiculoRepositorio vehiculoRepositorio;
-	IVigilanteRepositorio vigilanteRepositorio;
+	IGestionParqueaderoJPA gestionParqueaderoRepositorio;
+	IVehiculoJPA vehiculoRepositorio;
+	IVehiculoRepositorio vigilanteRepositorio;
 	
 	@Autowired
 	private CalendarioServicio calendarioServicio;
 	
-	public IngresarVehiculoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
-			IVehiculoRepositorio vehiculoRepositorio) {
+	public IngresarVehiculoServicio(IGestionParqueaderoJPA gestionParqueaderoRepositorio,
+			IVehiculoJPA vehiculoRepositorio) {
 		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
 		this.vehiculoRepositorio = vehiculoRepositorio;
 	}
@@ -51,7 +51,7 @@ public class IngresarVehiculoServicio {
 	}
 	
 	public int cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
-		return gestionParqueaderoRepositorio.obtenerVehiculosParqueadosPorTipo(tipoVehiculo);
+		return 0; // gestionParqueaderoRepositorio. obtenerVehiculosParqueadosPorTipo(tipoVehiculo);
 	}
 	
 	public boolean esLetraInicialDeRestriccion(String placa) {

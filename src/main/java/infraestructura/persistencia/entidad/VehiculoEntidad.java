@@ -5,35 +5,54 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.Table;
 
+
 @Entity
-@Table (name = "Vehiculo")
+@Table(name = "vehiculo")
 public class VehiculoEntidad implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue
-	@Column (name = "ID_VEHICULO", nullable = false)
-	private Long idTransaccion;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "idVehiculo")
+	private long idVehiculo;
 	
-	@Column (name = "PLACA", nullable = false)
-	private String placa;
-	
-	@Column (name = "TIPO_VEHICULO", nullable = false)
+	@Column(name = "tipoVehiculo", nullable = false)
 	private String tipoVehiculo;
 	
-	@Column (name = "CILINDRAJE", nullable = true)
-	private Integer cilindraje;
-
-	public Long getIdTransaccion() {
-		return idTransaccion;
+	@Column(name = "cilindraje", nullable = false)
+	private int cilindraje;
+	
+	@Column(name = "placa", nullable = false)
+	private String placa;
+	
+	
+	public long getIdVehiculo() {
+		return idVehiculo;
 	}
 
-	public void setIdTransaccion(Long idTransaccion) {
-		this.idTransaccion = idTransaccion;
+	public void setIdVehiculo(long idVehiculo) {
+		this.idVehiculo = idVehiculo;
+	}
+	public String getTipoVehiculo() {
+		return tipoVehiculo;
+	}
+
+	public void setTipoVehiculo(String tipoVehiculo) {
+		this.tipoVehiculo = tipoVehiculo;
+	}
+
+	public int getCilindraje() {
+		return cilindraje;
+	}
+
+	public void setCilindraje(int cilindraje) {
+		this.cilindraje = cilindraje;
 	}
 
 	public String getPlaca() {
@@ -44,21 +63,6 @@ public class VehiculoEntidad implements Serializable {
 		this.placa = placa;
 	}
 
-	public String getTipoVehiculo() {
-		return tipoVehiculo;
-	}
-
-	public void setTipoVehiculo(String tipoVehiculo) {
-		this.tipoVehiculo = tipoVehiculo;
-	}
-
-	public Integer getCilindraje() {
-		return cilindraje;
-	}
-
-	public void setCilindraje(Integer cilindraje) {
-		this.cilindraje = cilindraje;
-	}
 
 	public VehiculoEntidad(String placa, String tipoVehiculo, Integer cilindraje) {
 		
@@ -67,8 +71,4 @@ public class VehiculoEntidad implements Serializable {
 		this.cilindraje = cilindraje;
 	}
 	
-	
-	
-	
-
 }

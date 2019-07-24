@@ -8,7 +8,6 @@ public class VehiculoTestDataBuilder {
 	private String tipoVehiculo;
 	private int cilindraje;
 
-	
 	public VehiculoTestDataBuilder conPlaca(String placa) {
 		this.placa=placa;
 		return this;

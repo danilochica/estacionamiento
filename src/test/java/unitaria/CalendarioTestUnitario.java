@@ -1,6 +1,6 @@
-package dominio.unitaria;
+package unitaria;
 
-public class CalendarioTest {
+public class CalendarioTestUnitario {
 /*
 	@Test
 	public void testDiaHabilParaPlacaConLetraInicialA() {	
