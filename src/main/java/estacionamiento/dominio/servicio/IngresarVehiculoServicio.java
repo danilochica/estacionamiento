@@ -18,7 +18,7 @@ public class IngresarVehiculoServicio {
 	public static final int CAPACIDAD_MAXIMA_DE_CARROS = 20;
 	public static final int CAPACIDAD_MAXIMA_DE_MOTOS = 10;
 	
-	public static final String PLACA_INICIA_CON_A = "No puede ingresar porque no está en un día hábil";
+	public static final String PLACA_INICIA_CON_A = "No puede ingresar porque no esta en un dia habil";
 	public static final String NO_HAY_CELDAS_DISPONIBLES ="No hay celdas disponibles";
 	public static final String PARQUEO_EXITOSO ="Registro exitoso";
 	
