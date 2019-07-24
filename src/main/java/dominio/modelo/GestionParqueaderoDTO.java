@@ -1,23 +1,25 @@
 package dominio.modelo;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 
 public class GestionParqueaderoDTO {
 
 	private Long idTransaccion;
-	private LocalDateTime fechaIngreso;
-	private LocalDateTime fechaSalida;
+	private Date fechaIngreso;
+	private Date fechaSalida;
 	private BigDecimal valorServicio;
 	private Boolean estadoRegistro;
 	private VehiculoDTO vehiculo;
 	
 	
+	public GestionParqueaderoDTO() {
+	}
 	
-	public GestionParqueaderoDTO(Long idTransaccion, LocalDateTime fechaIngreso, LocalDateTime fechaSalida,
-			BigDecimal valorServicio, Boolean estadoRegistro, VehiculoDTO vehiculo) {
+	public GestionParqueaderoDTO(Long idTransaccion, Date fechaIngreso, Date fechaSalida, BigDecimal valorServicio,
+			Boolean estadoRegistro, VehiculoDTO vehiculo) {
 		this.idTransaccion = idTransaccion;
 		this.fechaIngreso = fechaIngreso;
 		this.fechaSalida = fechaSalida;
@@ -26,18 +28,15 @@ public class GestionParqueaderoDTO {
 		this.vehiculo = vehiculo;
 	}
 
-	public GestionParqueaderoDTO() {
-	}
-
 	public Long getIdTransaccion() {
 		return idTransaccion;
 	}
-
-	public LocalDateTime getFechaIngreso() {
+	
+	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
-
-	public LocalDateTime getFechaSalida() {
+	
+	public Date getFechaSalida() {
 		return fechaSalida;
 	}
 
@@ -52,9 +51,7 @@ public class GestionParqueaderoDTO {
 	public VehiculoDTO getVehiculo() {
 		return vehiculo;
 	}
-	
-	
-	
+
 	
 
 }

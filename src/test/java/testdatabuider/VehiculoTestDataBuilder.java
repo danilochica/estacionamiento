@@ -24,7 +24,6 @@ public class VehiculoTestDataBuilder {
 		return this;
 	}
 	
-	
 	public VehiculoDTO build() {
 		return new VehiculoDTO(this.placa, this.tipoVehiculo, this.cilindraje);
 	}

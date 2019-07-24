@@ -2,14 +2,12 @@ package infraestructura.persistencia.entidad;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -25,22 +23,25 @@ public class GestionParqueaderoEntidad implements Serializable{
 	private Long idTransaccion;
 	
 	@Column (name = "REGISTRO_INGRESO", nullable = false)
-	private LocalDateTime registroIngreso;
+	private Date registroIngreso;
 	
 	@Column (name = "REGISTRO_SALIDA", nullable = false)
-	private LocalDateTime registroSalida;
-	
+	private Date registroSalida;
+
 	@Column (name = "VALOR_SERVICIO", nullable = false)
 	private BigDecimal valorServicio;
 
 	@Column (name = "ESTADO", nullable = false)
 	private Boolean estado;
-
-	@ManyToOne
-	@JoinColumn (name = "ID_VEHICULO", nullable = false)
-	private VehiculoEntidad vehiculo;
 	
-	public GestionParqueaderoEntidad(Long idTransaccion, LocalDateTime registroIngreso, LocalDateTime registroSalida,
+	@Column (name = "VEHICULO", nullable = false)
+	private VehiculoEntidad vehiculo;
+
+	public GestionParqueaderoEntidad() {
+		
+	}
+	
+	public GestionParqueaderoEntidad(Long idTransaccion, Date registroIngreso, Date registroSalida,
 			BigDecimal valorServicio, Boolean estado, VehiculoEntidad vehiculo) {
 		this.idTransaccion = idTransaccion;
 		this.registroIngreso = registroIngreso;
@@ -58,20 +59,28 @@ public class GestionParqueaderoEntidad implements Serializable{
 		this.idTransaccion = idTransaccion;
 	}
 
-	public LocalDateTime getRegistroIngreso() {
+	public Date getRegistroIngreso() {
 		return registroIngreso;
 	}
 
-	public void setRegistroIngreso(LocalDateTime registroIngreso) {
+	public void setRegistroIngreso(Date registroIngreso) {
 		this.registroIngreso = registroIngreso;
 	}
 
-	public LocalDateTime getRegistroSalida() {
+	public Date getRegistroSalida() {
 		return registroSalida;
 	}
 
-	public void setRegistroSalida(LocalDateTime registroSalida) {
+	public void setRegistroSalida(Date registroSalida) {
 		this.registroSalida = registroSalida;
+	}
+
+	public BigDecimal getValorServicio() {
+		return valorServicio;
+	}
+
+	public void setValorServicio(BigDecimal valorServicio) {
+		this.valorServicio = valorServicio;
 	}
 
 	public Boolean getEstado() {
@@ -89,16 +98,8 @@ public class GestionParqueaderoEntidad implements Serializable{
 	public void setVehiculo(VehiculoEntidad vehiculo) {
 		this.vehiculo = vehiculo;
 	}
-
-	public BigDecimal getValorServicio() {
-		return valorServicio;
-	}
-
-	public void setValorServicio(BigDecimal valorServicio) {
-		this.valorServicio = valorServicio;
-	}
 	
 	
 	
-
+	
 }

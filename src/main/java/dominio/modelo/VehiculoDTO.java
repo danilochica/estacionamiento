@@ -27,6 +27,13 @@ public class VehiculoDTO {
 		return cilindraje;
 	}
 
+	public boolean esCarro() {
+		return tipoVehiculo.equals("Carro");
+	}
+	
+	public boolean esMoto() {
+		return tipoVehiculo.equals("Moto");
+	}
 	
 
 
