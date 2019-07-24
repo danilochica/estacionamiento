@@ -4,19 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import dominio.excepcion.ExcepcionPlacaIniciaConA;
 import dominio.modelo.VehiculoDTO;
 import dominio.servicio.IngresarVehiculoServicio;
 import infraestructura.persistencia.repositorio.IGestionParqueaderoRepositorio;
 import infraestructura.persistencia.repositorio.IVehiculoRepositorio;
 import testdatabuider.VehiculoTestDataBuilder;
 
-public class IngresarVehiculoTest {
+public class VehiculoTest {
 	
 	private static final String PLACA_CON_LETRA_A = "AEQ99D";
 	private static final String TIPO_VEHICULO_MOTO = "moto";
@@ -145,7 +143,7 @@ public class IngresarVehiculoTest {
 		//Assert
 		assertFalse(resultado);
 	}
-	
+	/*
 	@Test(expected = ExcepcionPlacaIniciaConA.class)
 	public void testRegistrarVehiculoConLetraInicialA() {
 		
@@ -159,7 +157,7 @@ public class IngresarVehiculoTest {
 		
 		servicio.registrarVehiculo(vehiculoTest);
 		
-	}
+	}*/
 	
 	
 	@Test()
