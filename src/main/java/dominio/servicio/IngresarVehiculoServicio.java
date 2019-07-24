@@ -44,14 +44,14 @@ public class IngresarVehiculoServicio {
 	
 	public boolean hayDisponibilidadParqueo(VehiculoDTO vehiculoDTO) {
 		boolean hayCeldas;
-		int cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculoDTO.getTipoVehiculo());
+		Long cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculoDTO.getTipoVehiculo());
 		hayCeldas = vehiculoDTO.esCarro() ? 
 				cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_CARROS : cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_MOTOS;
 		return hayCeldas;
 	}
 	
-	public int cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
-		return 0; // gestionParqueaderoRepositorio. obtenerVehiculosParqueadosPorTipo(tipoVehiculo);
+	public Long cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
+		return new Long(0); // gestionParqueaderoRepositorio. obtenerVehiculosParqueadosPorTipo(tipoVehiculo);
 	}
 	
 	public boolean esLetraInicialDeRestriccion(String placa) {

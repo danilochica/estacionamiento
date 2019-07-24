@@ -1,23 +1,24 @@
 package aplicacion.comando.consulta.manejador;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import dominio.modelo.GestionParqueaderoDTO;
-import dominio.puerto.dao.GestionParqueaderoDAO;
+import infraestructura.persistencia.entidad.GestionParqueaderoEntidad;
+import infraestructura.persistencia.repositorio.IGestionParqueaderoJPA;
 
 @Component
 public class ManejadorListarVehiculosParqueados {
 	
-	private final GestionParqueaderoDAO gestionParqueaderoDAO;
+	private IGestionParqueaderoJPA gestionParqueadero;
 	
-	public ManejadorListarVehiculosParqueados(GestionParqueaderoDAO gestionParqueaderoDAO) {
-		this.gestionParqueaderoDAO = gestionParqueaderoDAO;
+	public ManejadorListarVehiculosParqueados(IGestionParqueaderoJPA gestionParqueadero) {
+		super();
+		this.gestionParqueadero = gestionParqueadero;
 	}
 	
-	public Collection<GestionParqueaderoDTO> ejecutarConsulta(){
-		return this.gestionParqueaderoDAO.listarVehiculosParqueados();
+	public List<GestionParqueaderoEntidad> ejecutarConsulta(){
+		return this.gestionParqueadero.findByEstado(true);
 	}
 
 }

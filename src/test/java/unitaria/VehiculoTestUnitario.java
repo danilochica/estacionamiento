@@ -75,7 +75,7 @@ public class VehiculoTestUnitario {
 	public void testHayDisponibilidadParqueoParaMoto() {
 		
 		//Arrange
-		int cantidadMotosParqueadas = 8;
+		Long cantidadMotosParqueadas = new Long(8);
 		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
 		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO);
@@ -93,7 +93,7 @@ public class VehiculoTestUnitario {
 	public void testNoHayDisponibilidadParqueoParaMoto() {
 		
 		//Arrange
-		int cantidadMotosParqueadas = 22;
+		Long cantidadMotosParqueadas = new Long(22);
 		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
 		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
@@ -112,7 +112,7 @@ public class VehiculoTestUnitario {
 	public void testHayDisponibilidadParqueoParaCarro() {
 		
 		//Arrange
-		int cantidadCarrosParqueados = 15;
+		Long cantidadCarrosParqueados =  new Long(15);
 		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
 		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
@@ -130,7 +130,7 @@ public class VehiculoTestUnitario {
 	public void testNoHayDisponibilidadParqueoParaCarro() {
 		
 		//Arrange
-		int cantidadCarrosParqueados = 22;
+		Long cantidadCarrosParqueados = new Long(22);
 		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
 		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
