@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -17,8 +18,8 @@ import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 public class VehiculoTestUnitario {
 	
 	private static final String PLACA_CON_LETRA_A = "AEQ99D";
-	private static final String TIPO_VEHICULO_MOTO = "moto";
-	private static final String TIPO_VEHICULO_CARRO = "carro";
+	private static final String TIPO_VEHICULO_MOTO = "Moto";
+	private static final String TIPO_VEHICULO_CARRO = "Carro";
 	private static final int CILINDRAJE = 150;
 	
 	boolean resultado;
@@ -26,13 +27,10 @@ public class VehiculoTestUnitario {
 	
 	@Test
 	public void crearVehiculoTest() {
-		//Arrange
 		VehiculoTestDataBuilder vehiculoTestDataBuilder = new VehiculoTestDataBuilder().conPlaca(PLACA_CON_LETRA_A).conTipoVehiculo(TIPO_VEHICULO_MOTO).conCilindraje(CILINDRAJE);
 		
-		//Act
 		VehiculoDTO vehiculo = vehiculoTestDataBuilder.build();
 		
-		//Assert
 		assertEquals(PLACA_CON_LETRA_A, vehiculo.getPlaca());
 		assertEquals(TIPO_VEHICULO_MOTO, vehiculo.getTipoVehiculo());
 		assertEquals(CILINDRAJE, vehiculo.getCilindraje(),0);
@@ -41,124 +39,75 @@ public class VehiculoTestUnitario {
 	
 	@Test
 	public void testVehiculoPlacaConLetraInicialIgualA() {
-		//Arrange 
+
 		String placaRegistrada = "ASQ523";
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		ParqueaderoServicio servicio = new ParqueaderoServicio();
 		
-		//Act
 		resultado = servicio.esLetraInicialDeRestriccion(vehiculoTest.getPlaca());
 		
-		//Assert
 		assertTrue(resultado);
 		
 	}
 	
 	@Test
 	public void testVehiculoPlacaConLetraInicialDiferente() {
-		//Arrange 
 		String placaRegistrada = "KSQ523";
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		ParqueaderoServicio servicio = new ParqueaderoServicio();
 		
-		//Act
 		resultado = servicio.esLetraInicialDeRestriccion(vehiculoTest.getPlaca());
 		
-		//Assert
 		assertFalse(resultado);
 	}
-	
-	
-	@Test
-	public void testHayDisponibilidadParqueoParaMoto() {
-		
-		//Arrange
-		Long cantidadMotosParqueadas = new Long(8);
-		ParqueaderoServicio servicio = new ParqueaderoServicio();
-		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO);
-		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		Mockito.doReturn(cantidadMotosParqueadas).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO);
-		
-		//Act
-		resultado = spyServicio.hayDisponibilidadParqueo(vehiculoTest);
-		
-		//Assert
-		assertTrue(resultado);
-	}
-	
-	@Test
-	public void testNoHayDisponibilidadParqueoParaMoto() {
-		
-		//Arrange
-		Long cantidadMotosParqueadas = new Long(22);
-		ParqueaderoServicio servicio = new ParqueaderoServicio();
-		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
-		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		Mockito.doReturn(cantidadMotosParqueadas).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
-		
-		//Act
-		resultado = spyServicio.hayDisponibilidadParqueo(vehiculoTest);
-		
-		//Assert
-		assertFalse(resultado);
-	}
-	
+
 	
 	@Test
 	public void testHayDisponibilidadParqueoParaCarro() {
-		
-		//Arrange
-		Long cantidadCarrosParqueados =  new Long(15);
-		ParqueaderoServicio servicio = new ParqueaderoServicio();
-		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
+
+		IGestionParqueaderoRepositorio gestionParqueaderoRepositorio = mock(IGestionParqueaderoRepositorio.class);
+		IVehiculoRepositorio vehiculoRepositorio = mock(IVehiculoRepositorio.class);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		Mockito.doReturn(cantidadCarrosParqueados).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
-		
-		//Act
-		resultado = spyServicio.hayDisponibilidadParqueo(vehiculoTest);
-		
-		//Assert
-		assertFalse(resultado);
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(15);
+
+		resultado = servicio.hayDisponibilidadParqueo(vehiculoTest);
+
+		assertTrue(resultado);
 	}
 	
 	@Test
 	public void testNoHayDisponibilidadParqueoParaCarro() {
 		
-		//Arrange
-		Long cantidadCarrosParqueados = new Long(22);
-		ParqueaderoServicio servicio = new ParqueaderoServicio();
-		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
+		IGestionParqueaderoRepositorio gestionParqueaderoRepositorio = mock(IGestionParqueaderoRepositorio.class);
+		IVehiculoRepositorio vehiculoRepositorio = mock(IVehiculoRepositorio.class);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		Mockito.doReturn(cantidadCarrosParqueados).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
-		
-		//Act
-		resultado = spyServicio.hayDisponibilidadParqueo(vehiculoTest);
-		
-		//Assert
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(22);
+
+		resultado = servicio.hayDisponibilidadParqueo(vehiculoTest);
+
 		assertFalse(resultado);
 	}
-	/*
-	@Test(expected = ExcepcionPlacaIniciaConA.class)
-	public void testRegistrarVehiculoConLetraInicialA() {
+	
+	@Test
+	public void testNoHayDisponibilidadParqueoParaMoto() {
 		
 		IGestionParqueaderoRepositorio gestionParqueaderoRepositorio = mock(IGestionParqueaderoRepositorio.class);
 		IVehiculoRepositorio vehiculoRepositorio = mock(IVehiculoRepositorio.class);
-		
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
-		
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(PLACA_CON_LETRA_A);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("ASD12D");
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		
-		servicio.registrarVehiculo(vehiculoTest);
-		
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO)).thenReturn(22);
+
+		resultado = servicio.hayDisponibilidadParqueo(vehiculoTest);
+
+		assertFalse(resultado);
 	}
-	*/
 	
 	
 	@Test()
