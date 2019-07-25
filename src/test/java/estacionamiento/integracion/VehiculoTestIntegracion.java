@@ -47,7 +47,7 @@ public class VehiculoTestIntegracion {
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada).conTipoVehiculo(tipoVehiculo).conCilindraje(cilindraje);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		
-		mockMvc.perform(post("/ingresarVehiculo")
+		mockMvc.perform(post("/parqueadero")
 				.content(new ObjectMapper().writeValueAsString(vehiculoTest))
 				.contentType(MediaType.APPLICATION_JSON))				
 				.andExpect(status().isOk())
