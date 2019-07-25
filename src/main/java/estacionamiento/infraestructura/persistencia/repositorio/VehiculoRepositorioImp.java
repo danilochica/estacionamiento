@@ -17,10 +17,11 @@ public class VehiculoRepositorioImp implements IVehiculoRepositorio {
 	}
 
 	@Override
-	public void registrarVehiculoEnElSistema(VehiculoDTO vehiculoDTO) {
+	public VehiculoDTO registrarVehiculoEnElSistema(VehiculoDTO vehiculoDTO) {
 		
 		VehiculoEntidad vehiculoEntidad = VehiculoBuilder.convertirAEntidad(vehiculoDTO);
-		repositorioJPA.save(vehiculoEntidad);
+		VehiculoEntidad vehiculoAlmacenado = repositorioJPA.save(vehiculoEntidad);
+		return VehiculoBuilder.convertirAModelo(vehiculoAlmacenado);
 		
 		
 	}

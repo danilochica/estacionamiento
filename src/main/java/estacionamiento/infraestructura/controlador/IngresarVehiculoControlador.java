@@ -1,6 +1,5 @@
 package estacionamiento.infraestructura.controlador;
 
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +27,13 @@ public class IngresarVehiculoControlador {
 	@PostMapping
 	public void crearVehiculo(@RequestBody VehiculoDTO vehiculoDTO) {
 		ingresarVehiculo.guardarVehiculo(vehiculoDTO);
-
 	}
+	
+	/*
+	@PostMapping(value = "/guardarGestionParqueadero")
+	public void  crearRegistroVehiculoEnGestionParqueadero(@RequestBody VehiculoDTO vehiculoDTO) {
+		ingresarVehiculo.guardarIngresoVehiculoAlParqueadero(vehiculoDTO); 
+	}
+	 */
 
 }

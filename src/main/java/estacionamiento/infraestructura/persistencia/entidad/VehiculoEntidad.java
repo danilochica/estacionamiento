@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.Table;
+
 
 
 @Entity
@@ -30,7 +30,6 @@ public class VehiculoEntidad implements Serializable {
 	
 	@Column(name = "placa", nullable = false)
 	private String placa;
-	
 	
 	public long getIdVehiculo() {
 		return idVehiculo;

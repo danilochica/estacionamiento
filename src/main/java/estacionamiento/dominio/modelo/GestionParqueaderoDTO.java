@@ -52,6 +52,32 @@ public class GestionParqueaderoDTO {
 		return vehiculo;
 	}
 
+	public void setIdTransaccion(Long idTransaccion) {
+		this.idTransaccion = idTransaccion;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
+	public void setValorServicio(BigDecimal valorServicio) {
+		this.valorServicio = valorServicio;
+	}
+
+	public void setEstadoRegistro(Boolean estadoRegistro) {
+		this.estadoRegistro = estadoRegistro;
+	}
+
+	public void setVehiculo(VehiculoDTO vehiculo) {
+		this.vehiculo = vehiculo;
+	}
+	
+	
+	
 	
 
 }

@@ -13,12 +13,17 @@ public class ManejadorIngresarVehiculo {
 	
 	IngresarVehiculoServicio ingresarVehiculoServicio;
 	
+	
 	public ManejadorIngresarVehiculo(IngresarVehiculoServicio ingresarVehiculoServicio) {
 		this.ingresarVehiculoServicio = ingresarVehiculoServicio;
 	}
 	
 	public void guardarVehiculo(VehiculoDTO vehiculoDTO) {
-		this.ingresarVehiculoServicio.registrarVehiculo(vehiculoDTO);
+		 ingresarVehiculoServicio.registrarVehiculo(vehiculoDTO);
+	}
+	
+	public void guardarIngresoVehiculoAlParqueadero(VehiculoDTO vehiculoDTO) {
+		this.ingresarVehiculoServicio.registarIngresoAlParqueadero(vehiculoDTO);
 	}
 
 }

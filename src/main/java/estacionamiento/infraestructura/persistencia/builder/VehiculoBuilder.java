@@ -6,7 +6,7 @@ import estacionamiento.infraestructura.persistencia.entidad.VehiculoEntidad;
 public final class VehiculoBuilder {
 
 	public static VehiculoDTO convertirAModelo (VehiculoEntidad vehiculoEntidad) {
-		VehiculoDTO vehiculoDto = new VehiculoDTO(vehiculoEntidad.getPlaca(), vehiculoEntidad.getTipoVehiculo(), vehiculoEntidad.getCilindraje());
+		VehiculoDTO vehiculoDto = new VehiculoDTO(vehiculoEntidad.getIdVehiculo(), vehiculoEntidad.getPlaca(), vehiculoEntidad.getTipoVehiculo(), vehiculoEntidad.getCilindraje());
 		return vehiculoDto;
 	}
 	

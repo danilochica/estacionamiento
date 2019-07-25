@@ -2,7 +2,10 @@ package estacionamiento.infraestructura.persistencia.repositorio;
 
 import org.springframework.stereotype.Repository;
 
+import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
 import estacionamiento.dominio.repositorio.IGestionParqueaderoRepositorio;
+import estacionamiento.infraestructura.persistencia.builder.GestionParqueaderoBuilder;
+import estacionamiento.infraestructura.persistencia.entidad.GestionParqueaderoEntidad;
 
 @Repository
 public class GestionParqueaderoRepositorioImp implements IGestionParqueaderoRepositorio{
@@ -16,6 +19,14 @@ public class GestionParqueaderoRepositorioImp implements IGestionParqueaderoRepo
 	@Override
 	public Long cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
 		return new Long(0); //repositorioJPA.contarVehiculosParqueados(tipoVehiculo);
+	}
+
+	@Override
+	public void registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO) {
+	
+		GestionParqueaderoEntidad gestionParqueadero = GestionParqueaderoBuilder.convertirAEntidad(gestionParqueaderoDTO);
+		repositorioJPA.save(gestionParqueadero);
+		
 	}
 
 }

@@ -1,3 +1,4 @@
+
 package estacionamiento.infraestructura.persistencia.builder;
 
 import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
@@ -9,7 +10,7 @@ public final class GestionParqueaderoBuilder {
 	
 	public static  GestionParqueaderoDTO convertirAModelo(GestionParqueaderoEntidad parqueaderoEntidad) {
 		VehiculoDTO vehiculoDTO = VehiculoBuilder.convertirAModelo(parqueaderoEntidad.getIdVehiculo());
-		GestionParqueaderoDTO parquederoDTO = new GestionParqueaderoDTO(parqueaderoEntidad.getIdTransaccion(), parqueaderoEntidad.getRegistroIngreso(), parqueaderoEntidad.getRegistroSalida(),  parqueaderoEntidad.getValorServicio(), parqueaderoEntidad.getEstado(), vehiculoDTO);
+		GestionParqueaderoDTO parquederoDTO = new GestionParqueaderoDTO(parqueaderoEntidad.getIdTransaccion(), parqueaderoEntidad.getRegistroIngreso(), parqueaderoEntidad.getRegistroSalida(),  parqueaderoEntidad.getValorServicio(), parqueaderoEntidad.getEstado(),vehiculoDTO);
 		return parquederoDTO;
 	}
 	
