@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import estacionamiento.aplicacion.manejadores.ManejadorIngresarVehiculo;
+import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
 import estacionamiento.dominio.modelo.VehiculoDTO;
 import estacionamiento.infraestructura.persistencia.repositorio.IGestionParqueaderoJPA;
 
@@ -25,15 +26,12 @@ public class IngresarVehiculoControlador {
 	}
 
 	@PostMapping
-	public void crearVehiculo(@RequestBody VehiculoDTO vehiculoDTO) {
-		ingresarVehiculo.guardarVehiculo(vehiculoDTO);
+	public GestionParqueaderoDTO registrarVehiculoParqueadero(@RequestBody VehiculoDTO vehiculoDTO) {
+		VehiculoDTO vehiculoAlmacenado =  ingresarVehiculo.crearVehiculo(vehiculoDTO);
+		GestionParqueaderoDTO parqueaderoAlmacenado = ingresarVehiculo.guardarIngresoVehiculoAlParqueadero(vehiculoAlmacenado);
+		
+		return parqueaderoAlmacenado;
 	}
 	
-	/*
-	@PostMapping(value = "/guardarGestionParqueadero")
-	public void  crearRegistroVehiculoEnGestionParqueadero(@RequestBody VehiculoDTO vehiculoDTO) {
-		ingresarVehiculo.guardarIngresoVehiculoAlParqueadero(vehiculoDTO); 
-	}
-	 */
 
 }

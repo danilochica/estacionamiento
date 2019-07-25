@@ -7,5 +7,5 @@ public interface IGestionParqueaderoRepositorio {
 	
 	Long cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo);
 	
-	void registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO);
+	GestionParqueaderoDTO registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO);
 }

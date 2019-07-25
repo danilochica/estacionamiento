@@ -11,7 +11,7 @@ public final class VehiculoBuilder {
 	}
 	
 	public static VehiculoEntidad convertirAEntidad(VehiculoDTO vehiculoDTO) {
-		VehiculoEntidad vehiculoEntidad = new VehiculoEntidad(vehiculoDTO.getPlaca(), vehiculoDTO.getTipoVehiculo(), vehiculoDTO.getCilindraje());
+		VehiculoEntidad vehiculoEntidad = new VehiculoEntidad(vehiculoDTO.getIdVehiculo(), vehiculoDTO.getTipoVehiculo(), vehiculoDTO.getCilindraje(), vehiculoDTO.getPlaca());
 		return vehiculoEntidad;
 		
 	}

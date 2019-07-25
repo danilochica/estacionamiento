@@ -24,10 +24,10 @@ public class GestionParqueaderoEntidad{
 	@Column (name = "REGISTRO_INGRESO", nullable = false)
 	private Date registroIngreso;
 	
-	@Column (name = "REGISTRO_SALIDA", nullable = false)
+	@Column (name = "REGISTRO_SALIDA", nullable = true)
 	private Date registroSalida;
 
-	@Column (name = "VALOR_SERVICIO", nullable = false)
+	@Column (name = "VALOR_SERVICIO", nullable = true)
 	private BigDecimal valorServicio;
 
 	@Column (name = "ESTADO", nullable = false)
@@ -41,15 +41,8 @@ public class GestionParqueaderoEntidad{
 		
 	}
 	
-	public GestionParqueaderoEntidad(Long idTransaccion, Date registroIngreso, Date registroSalida,
-			BigDecimal valorServicio, Boolean estado, VehiculoEntidad vehiculo) {
-		this.idTransaccion = idTransaccion;
-		this.registroIngreso = registroIngreso;
-		this.registroSalida = registroSalida;
-		this.valorServicio = valorServicio;
-		this.estado = estado;
-		this.idVehiculo = vehiculo;
-	}
+	
+	
 
 	public Long getIdTransaccion() {
 		return idTransaccion;
@@ -98,5 +91,18 @@ public class GestionParqueaderoEntidad{
 	public void setIdVehiculo(VehiculoEntidad idVehiculo) {
 		this.idVehiculo = idVehiculo;
 	}
+	
+	public GestionParqueaderoEntidad(Long idTransaccion, Date registroIngreso, Date registroSalida,
+			BigDecimal valorServicio, Boolean estado, VehiculoEntidad vehiculo) {
+		this.idTransaccion = idTransaccion;
+		this.registroIngreso = registroIngreso;
+		this.registroSalida = registroSalida;
+		this.valorServicio = valorServicio;
+		this.estado = estado;
+		this.idVehiculo = vehiculo;
+	}
+
+	
+	
 	
 }

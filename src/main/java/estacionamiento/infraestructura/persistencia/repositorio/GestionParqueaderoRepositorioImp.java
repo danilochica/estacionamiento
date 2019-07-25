@@ -22,10 +22,11 @@ public class GestionParqueaderoRepositorioImp implements IGestionParqueaderoRepo
 	}
 
 	@Override
-	public void registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO) {
+	public GestionParqueaderoDTO registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO) {
 	
 		GestionParqueaderoEntidad gestionParqueadero = GestionParqueaderoBuilder.convertirAEntidad(gestionParqueaderoDTO);
-		repositorioJPA.save(gestionParqueadero);
+		GestionParqueaderoEntidad registroAlmacenado =  repositorioJPA.save(gestionParqueadero);
+		return GestionParqueaderoBuilder.convertirAModelo(registroAlmacenado);
 		
 	}
 

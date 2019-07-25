@@ -68,7 +68,7 @@ public class IngresarVehiculoServicio {
 	    return calendario.getTime();
 	}
 	
-	public void registrarVehiculo(VehiculoDTO vehiculoDTO) {
+	public VehiculoDTO registrarVehiculo(VehiculoDTO vehiculoDTO) {
 		
 		if(esLetraInicialDeRestriccion(vehiculoDTO.getPlaca()) && !esDiaHabilParaPlacaConLetraInicialA()){
 			throw new ExcepcionPlacaIniciaConA(PLACA_INICIA_CON_A);
@@ -77,23 +77,20 @@ public class IngresarVehiculoServicio {
 		if(!hayDisponibilidadParqueo(vehiculoDTO)) {
 			throw new ExcepecionNoHayCeldasDisponibles(NO_HAY_CELDAS_DISPONIBLES);
 		}
-	
-		vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculoDTO);
-		//registarIngresoAlParqueadero(vehiculoParaIngresar);
+		
+		VehiculoDTO vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculoDTO);
+		return vehiculoGuardado;
 		
 	}
 	
 	
 	
-	public void registarIngresoAlParqueadero(VehiculoDTO vehiculoDTO) {
+	public GestionParqueaderoDTO registarIngresoAlParqueadero(VehiculoDTO vehiculoDTO) {
 		
-		GestionParqueaderoDTO gestionParqueaderoDTO = new GestionParqueaderoDTO();
-		gestionParqueaderoDTO.setEstadoRegistro(true);
-		gestionParqueaderoDTO.setFechaIngreso(obtenerfechaAtual());
-		gestionParqueaderoDTO.setVehiculo(vehiculoDTO);
+		GestionParqueaderoDTO gestionParqueaderoDTO = new GestionParqueaderoDTO(obtenerfechaAtual(), true, vehiculoDTO);
+		GestionParqueaderoDTO registroAlmacenado = gestionParqueaderoRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
 		
-		gestionParqueaderoRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
-		
+		return registroAlmacenado;
 		
 	}
 	

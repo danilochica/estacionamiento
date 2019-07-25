@@ -63,11 +63,11 @@ public class VehiculoEntidad implements Serializable {
 	}
 
 
-	public VehiculoEntidad(String placa, String tipoVehiculo, Integer cilindraje) {
-		
-		this.placa = placa;
+	public VehiculoEntidad(long idVehiculo, String tipoVehiculo, int cilindraje, String placa) {
+		this.idVehiculo = idVehiculo;
 		this.tipoVehiculo = tipoVehiculo;
 		this.cilindraje = cilindraje;
+		this.placa = placa;
 	}
 	
 }

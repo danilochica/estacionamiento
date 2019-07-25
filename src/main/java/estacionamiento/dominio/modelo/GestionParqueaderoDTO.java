@@ -13,20 +13,7 @@ public class GestionParqueaderoDTO {
 	private BigDecimal valorServicio;
 	private Boolean estadoRegistro;
 	private VehiculoDTO vehiculo;
-	
-	
-	public GestionParqueaderoDTO() {
-	}
-	
-	public GestionParqueaderoDTO(Long idTransaccion, Date fechaIngreso, Date fechaSalida, BigDecimal valorServicio,
-			Boolean estadoRegistro, VehiculoDTO vehiculo) {
-		this.idTransaccion = idTransaccion;
-		this.fechaIngreso = fechaIngreso;
-		this.fechaSalida = fechaSalida;
-		this.valorServicio = valorServicio;
-		this.estadoRegistro = estadoRegistro;
-		this.vehiculo = vehiculo;
-	}
+
 
 	public Long getIdTransaccion() {
 		return idTransaccion;
@@ -75,6 +62,23 @@ public class GestionParqueaderoDTO {
 	public void setVehiculo(VehiculoDTO vehiculo) {
 		this.vehiculo = vehiculo;
 	}
+
+	public GestionParqueaderoDTO(Long idTransaccion, Date fechaIngreso, Date fechaSalida, BigDecimal valorServicio,
+			Boolean estadoRegistro, VehiculoDTO vehiculo) {
+		this.idTransaccion = idTransaccion;
+		this.fechaIngreso = fechaIngreso;
+		this.fechaSalida = fechaSalida;
+		this.valorServicio = valorServicio;
+		this.estadoRegistro = estadoRegistro;
+		this.vehiculo = vehiculo;
+	}
+
+	public GestionParqueaderoDTO(Date fechaIngreso, Boolean estadoRegistro, VehiculoDTO vehiculo) {
+		this.fechaIngreso = fechaIngreso;
+		this.estadoRegistro = estadoRegistro;
+		this.vehiculo = vehiculo;
+	}
+	
 	
 	
 	

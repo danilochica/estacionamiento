@@ -21,8 +21,8 @@ public class VehiculoRepositorioImp implements IVehiculoRepositorio {
 		
 		VehiculoEntidad vehiculoEntidad = VehiculoBuilder.convertirAEntidad(vehiculoDTO);
 		VehiculoEntidad vehiculoAlmacenado = repositorioJPA.save(vehiculoEntidad);
-		return VehiculoBuilder.convertirAModelo(vehiculoAlmacenado);
 		
+		return VehiculoBuilder.convertirAModelo(vehiculoAlmacenado);
 		
 	}
 
