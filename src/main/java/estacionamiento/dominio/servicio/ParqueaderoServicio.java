@@ -11,12 +11,12 @@ import estacionamiento.dominio.modelo.VehiculoDTO;
 import estacionamiento.dominio.repositorio.IGestionParqueaderoRepositorio;
 import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
 
-public class IngresarVehiculoServicio {
+public class ParqueaderoServicio {
 	
 	public static final int CILINDRAJE_PARA_CALCULAR_RECARGO = 500;
 	public static final String LETRA_INICIAL_PLACA= "A";
-	public static final String MOTO= "moto";
-	public static final String CARRO = "carro";
+	public static final String MOTO= "Moto";
+	public static final String CARRO = "Carro";
 	public static final int CAPACIDAD_MAXIMA_DE_CARROS = 20;
 	public static final int CAPACIDAD_MAXIMA_DE_MOTOS = 10;
 	
@@ -28,11 +28,11 @@ public class IngresarVehiculoServicio {
 	IGestionParqueaderoRepositorio gestionParqueaderoRepositorio;
 	IVehiculoRepositorio vehiculoRepositorio;
 	
-	public IngresarVehiculoServicio() {
+	public ParqueaderoServicio() {
 		
 	}
 	
-	public IngresarVehiculoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
+	public ParqueaderoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
 			IVehiculoRepositorio vehiculoRepositorio) {
 		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
 		this.vehiculoRepositorio = vehiculoRepositorio;
@@ -40,7 +40,7 @@ public class IngresarVehiculoServicio {
 
 	public boolean hayDisponibilidadParqueo(VehiculoDTO vehiculoDTO) {
 		boolean hayCeldas;
-		Long cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculoDTO.getTipoVehiculo());
+		int cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculoDTO.getTipoVehiculo());
 		hayCeldas = vehiculoDTO.esCarro() ? 
 				cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_CARROS : cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_MOTOS;
 		return hayCeldas;
@@ -51,8 +51,8 @@ public class IngresarVehiculoServicio {
 		return(fechaActual.get(Calendar.DAY_OF_WEEK) <= 2);
 	}
 	
-	public Long cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
-		return new Long(5); //gestionParqueaderoRepositorio. obtenerVehiculosParqueadosPorTipo(tipoVehiculo);
+	public int cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
+		return tipoVehiculo.equals(MOTO) ? gestionParqueaderoRepositorio.contarMotosParqueadas() : gestionParqueaderoRepositorio.contarCarrosParqueados();
 	}
 	
 	public boolean esLetraInicialDeRestriccion(String placa) {

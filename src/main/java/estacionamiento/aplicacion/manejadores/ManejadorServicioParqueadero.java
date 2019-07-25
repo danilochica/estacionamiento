@@ -6,16 +6,15 @@ import org.springframework.stereotype.Service;
 
 import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
 import estacionamiento.dominio.modelo.VehiculoDTO;
-import estacionamiento.dominio.servicio.IngresarVehiculoServicio;
+import estacionamiento.dominio.servicio.ParqueaderoServicio;
 
 @Service
 @Transactional
-public class ManejadorIngresarVehiculo {
+public class ManejadorServicioParqueadero {
 	
-	IngresarVehiculoServicio ingresarVehiculoServicio;
+	ParqueaderoServicio ingresarVehiculoServicio;
 	
-	
-	public ManejadorIngresarVehiculo(IngresarVehiculoServicio ingresarVehiculoServicio) {
+	public ManejadorServicioParqueadero(ParqueaderoServicio ingresarVehiculoServicio) {
 		this.ingresarVehiculoServicio = ingresarVehiculoServicio;
 	}
 	

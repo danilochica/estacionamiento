@@ -15,12 +15,18 @@ public class GestionParqueaderoRepositorioImp implements IGestionParqueaderoRepo
 	public GestionParqueaderoRepositorioImp(IGestionParqueaderoJPA repositorioJPA) {
 		this.repositorioJPA = repositorioJPA;
 	}
+	
 
 	@Override
-	public Long cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
-		return new Long(0); //repositorioJPA.contarVehiculosParqueados(tipoVehiculo);
+	public int contarMotosParqueadas() {
+		return repositorioJPA.contarMotosParqueadas();
 	}
 
+	@Override
+	public int contarCarrosParqueados() {
+		return repositorioJPA.contarCarrosParqueados();
+	}
+	
 	@Override
 	public GestionParqueaderoDTO registarIngresoVehiculoAlParqueadero(GestionParqueaderoDTO gestionParqueaderoDTO) {
 	
@@ -29,5 +35,10 @@ public class GestionParqueaderoRepositorioImp implements IGestionParqueaderoRepo
 		return GestionParqueaderoBuilder.convertirAModelo(registroAlmacenado);
 		
 	}
+
+
+
+
+
 
 }

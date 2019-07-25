@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 import estacionamiento.dominio.modelo.VehiculoDTO;
 import estacionamiento.dominio.repositorio.IGestionParqueaderoRepositorio;
 import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
-import estacionamiento.dominio.servicio.IngresarVehiculoServicio;
+import estacionamiento.dominio.servicio.ParqueaderoServicio;
 import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 
 public class VehiculoTestUnitario {
@@ -45,7 +45,7 @@ public class VehiculoTestUnitario {
 		String placaRegistrada = "ASQ523";
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
 		
 		//Act
 		resultado = servicio.esLetraInicialDeRestriccion(vehiculoTest.getPlaca());
@@ -61,7 +61,7 @@ public class VehiculoTestUnitario {
 		String placaRegistrada = "KSQ523";
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
 		
 		//Act
 		resultado = servicio.esLetraInicialDeRestriccion(vehiculoTest.getPlaca());
@@ -76,8 +76,8 @@ public class VehiculoTestUnitario {
 		
 		//Arrange
 		Long cantidadMotosParqueadas = new Long(8);
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
-		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
+		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		Mockito.doReturn(cantidadMotosParqueadas).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO);
@@ -94,8 +94,8 @@ public class VehiculoTestUnitario {
 		
 		//Arrange
 		Long cantidadMotosParqueadas = new Long(22);
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
-		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
+		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		Mockito.doReturn(cantidadMotosParqueadas).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
@@ -113,8 +113,8 @@ public class VehiculoTestUnitario {
 		
 		//Arrange
 		Long cantidadCarrosParqueados =  new Long(15);
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
-		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
+		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		Mockito.doReturn(cantidadCarrosParqueados).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
@@ -131,8 +131,8 @@ public class VehiculoTestUnitario {
 		
 		//Arrange
 		Long cantidadCarrosParqueados = new Long(22);
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio();
-		IngresarVehiculoServicio spyServicio = Mockito.spy(servicio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio();
+		ParqueaderoServicio spyServicio = Mockito.spy(servicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO);
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
 		Mockito.doReturn(cantidadCarrosParqueados).when(spyServicio).cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO);
@@ -167,7 +167,7 @@ public class VehiculoTestUnitario {
 		IGestionParqueaderoRepositorio gestionParqueaderoRepositorio = mock(IGestionParqueaderoRepositorio.class);
 		IVehiculoRepositorio vehiculoRepositorio = mock(IVehiculoRepositorio.class);
 		
-		IngresarVehiculoServicio servicio = new IngresarVehiculoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
 		
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("KEQ99D");
 		VehiculoDTO vehiculoTest = vehiculoBuilder.build();

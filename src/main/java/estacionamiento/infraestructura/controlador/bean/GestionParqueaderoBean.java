@@ -5,15 +5,15 @@ import org.springframework.context.annotation.Configuration;
 
 import estacionamiento.dominio.repositorio.IGestionParqueaderoRepositorio;
 import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
-import estacionamiento.dominio.servicio.IngresarVehiculoServicio;
+import estacionamiento.dominio.servicio.ParqueaderoServicio;
 
 @Configuration
 public class GestionParqueaderoBean {
 	
 	@Bean
-	public IngresarVehiculoServicio ingresarVehiculoServicio (IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
+	public ParqueaderoServicio ingresarVehiculoServicio (IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
 			IVehiculoRepositorio vehiculoRepositorio) {
-		return new IngresarVehiculoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
+		return new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
 	}
 
 }
