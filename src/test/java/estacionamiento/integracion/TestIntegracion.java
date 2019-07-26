@@ -1,5 +1,6 @@
 package estacionamiento.integracion;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -53,6 +54,14 @@ public class TestIntegracion {
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(jsonPath("$.vehiculo.placa").value(placaRegistrada));
+	}
+	
+	@Test
+	public void testConsultarVehiculosParqueados() throws Exception {
+		
+		mockMvc.perform(get("/parqueadero/vehiculosParqueados"))				
+				.andExpect(status().isOk());
+		
 	}
 
 
