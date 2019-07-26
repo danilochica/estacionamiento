@@ -1,5 +1,7 @@
 package estacionamiento.aplicacion.manejadores;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +26,11 @@ public class ManejadorServicioParqueadero {
 	
 	public GestionParqueaderoDTO guardarIngresoVehiculoAlParqueadero(VehiculoDTO vehiculoDTO) {
 		return this.ingresarVehiculoServicio.registarIngresoAlParqueadero(vehiculoDTO);
+	}
+	
+	public List<GestionParqueaderoDTO> listaVehiculosParqueados(){
+		return this.ingresarVehiculoServicio.listarVehiculosParqueados();
+		
 	}
 
 }

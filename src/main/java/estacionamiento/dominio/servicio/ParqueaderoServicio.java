@@ -3,6 +3,7 @@ package estacionamiento.dominio.servicio;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import estacionamiento.dominio.excepcion.ExcepcionPlacaIniciaConA;
 import estacionamiento.dominio.excepcion.ExcepecionNoHayCeldasDisponibles;
@@ -13,6 +14,7 @@ import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
 
 public class ParqueaderoServicio {
 	
+	private static final boolean ESTADO = true;
 	public static final int CILINDRAJE_PARA_CALCULAR_RECARGO = 500;
 	public static final String LETRA_INICIAL_PLACA= "A";
 	public static final String MOTO= "Moto";
@@ -27,16 +29,6 @@ public class ParqueaderoServicio {
 	
 	IGestionParqueaderoRepositorio gestionParqueaderoRepositorio;
 	IVehiculoRepositorio vehiculoRepositorio;
-	
-	public ParqueaderoServicio() {
-		
-	}
-	
-	public ParqueaderoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
-			IVehiculoRepositorio vehiculoRepositorio) {
-		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
-		this.vehiculoRepositorio = vehiculoRepositorio;
-	}
 
 	public boolean hayDisponibilidadParqueo(VehiculoDTO vehiculoDTO) {
 		boolean hayCeldas;
@@ -82,9 +74,7 @@ public class ParqueaderoServicio {
 		return vehiculoGuardado;
 		
 	}
-	
-	
-	
+
 	public GestionParqueaderoDTO registarIngresoAlParqueadero(VehiculoDTO vehiculoDTO) {
 		
 		GestionParqueaderoDTO gestionParqueaderoDTO = new GestionParqueaderoDTO(obtenerfechaAtual(), true, vehiculoDTO);
@@ -94,5 +84,17 @@ public class ParqueaderoServicio {
 		
 	}
 	
+	public List<GestionParqueaderoDTO> listarVehiculosParqueados(){
+		 List<GestionParqueaderoDTO> vehiculosParqueados = gestionParqueaderoRepositorio.listaVehiculosParqueados(ESTADO);
+		 return vehiculosParqueados;
+	}
+	
+	public ParqueaderoServicio() {}
+	
+	public ParqueaderoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
+			IVehiculoRepositorio vehiculoRepositorio) {
+		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
+		this.vehiculoRepositorio = vehiculoRepositorio;
+	}
 	
 }

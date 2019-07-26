@@ -37,9 +37,7 @@ public class GestionParqueaderoEntidad{
 	@JoinColumn(name = "ID_VEHICULO", nullable = false)
 	private VehiculoEntidad idVehiculo;
 
-	public GestionParqueaderoEntidad() {
-		
-	}
+
 	
 	
 	
@@ -101,7 +99,8 @@ public class GestionParqueaderoEntidad{
 		this.estado = estado;
 		this.idVehiculo = vehiculo;
 	}
-
+	
+	public GestionParqueaderoEntidad() { }
 	
 	
 	

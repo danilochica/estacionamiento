@@ -15,5 +15,8 @@ public class GestionParqueaderoBean {
 			IVehiculoRepositorio vehiculoRepositorio) {
 		return new ParqueaderoServicio(gestionParqueaderoRepositorio, vehiculoRepositorio);
 	}
+	
+	
+	
 
 }

@@ -1,5 +1,7 @@
 package estacionamiento.dominio.repositorio;
 
+import java.util.List;
+
 import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
 
 
@@ -10,5 +12,7 @@ public interface IGestionParqueaderoRepositorio {
 	int contarMotosParqueadas();
 	
 	int contarCarrosParqueados();
+	
+	List<GestionParqueaderoDTO> listaVehiculosParqueados(boolean estado);
 
 }

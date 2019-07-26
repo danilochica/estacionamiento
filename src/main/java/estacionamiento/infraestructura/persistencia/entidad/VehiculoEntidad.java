@@ -19,16 +19,16 @@ public class VehiculoEntidad implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idVehiculo")
+	@Column(name = "ID_VEHICULO")
 	private long idVehiculo;
 	
-	@Column(name = "tipoVehiculo", nullable = false)
+	@Column(name = "TIPO_VEHICULO", nullable = false)
 	private String tipoVehiculo;
 	
-	@Column(name = "cilindraje", nullable = false)
+	@Column(name = "CILINDRAJE", nullable = false)
 	private int cilindraje;
 	
-	@Column(name = "placa", nullable = false)
+	@Column(name = "PLACA", nullable = false)
 	private String placa;
 	
 	public long getIdVehiculo() {
@@ -69,5 +69,7 @@ public class VehiculoEntidad implements Serializable {
 		this.cilindraje = cilindraje;
 		this.placa = placa;
 	}
+	
+	public VehiculoEntidad() {	}
 	
 }

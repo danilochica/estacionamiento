@@ -26,7 +26,7 @@ import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EstacionamientoApplication.class)
 @AutoConfigureMockMvc
-public class VehiculoTestIntegracion {
+public class TestIntegracion {
 	
 	@Autowired
 	private WebApplicationContext context;

@@ -1,6 +1,9 @@
 package estacionamiento.infraestructura.controlador;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,20 +20,26 @@ import estacionamiento.infraestructura.persistencia.repositorio.IGestionParquead
 public class ParqueaderoControlador {
 	
 	IGestionParqueaderoJPA gestionParqueaderoRepositorio;
-	ManejadorServicioParqueadero ingresarVehiculo;
+	ManejadorServicioParqueadero servicioParqueadero;
 	
 	public ParqueaderoControlador(IGestionParqueaderoJPA gestionParqueaderoRepositorio,
 			ManejadorServicioParqueadero ingresarVehiculo) {
 		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
-		this.ingresarVehiculo = ingresarVehiculo;
+		this.servicioParqueadero = ingresarVehiculo;
 	}
 
 	@PostMapping
 	public GestionParqueaderoDTO registrarVehiculoParqueadero(@RequestBody VehiculoDTO vehiculoDTO) {
-		VehiculoDTO vehiculoAlmacenado =  ingresarVehiculo.crearVehiculo(vehiculoDTO);
-		GestionParqueaderoDTO parqueaderoAlmacenado = ingresarVehiculo.guardarIngresoVehiculoAlParqueadero(vehiculoAlmacenado);
+		VehiculoDTO vehiculoAlmacenado =  servicioParqueadero.crearVehiculo(vehiculoDTO);
+		GestionParqueaderoDTO parqueaderoAlmacenado = servicioParqueadero.guardarIngresoVehiculoAlParqueadero(vehiculoAlmacenado);
 		
 		return parqueaderoAlmacenado;
+	}
+	
+	@GetMapping(value = "/vehiculosParqueados")
+	public List<GestionParqueaderoDTO>  obtenerVehiculosParqueados(){
+		List<GestionParqueaderoDTO> vehiculosParqueados = servicioParqueadero.listaVehiculosParqueados();
+		return vehiculosParqueados;
 	}
 	
 

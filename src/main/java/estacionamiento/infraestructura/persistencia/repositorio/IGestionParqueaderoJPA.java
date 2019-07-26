@@ -21,8 +21,8 @@ public interface IGestionParqueaderoJPA extends JpaRepository<GestionParqueadero
 			value = "SELECT count(v.*) FROM vehiculo v,Gestion_Parqueadero p WHERE p.id_Vehiculo =  v.id_vehiculo and p.estado = true and v.tipo_vehiculo = 'Moto'",
 		    nativeQuery = true)
 	int contarCarrosParqueados();
-
-	List<GestionParqueaderoEntidad> findByEstado(Boolean estado);
+	
+	List<GestionParqueaderoEntidad> findByEstado(boolean estado);
 
 	
 }

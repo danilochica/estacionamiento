@@ -1,4 +1,4 @@
-package estacionamiento.infraestructura.persistencia.repositorio;
+package estacionamiento.infraestructura.persistencia.repositorio.implementacion;
 
 import org.springframework.stereotype.Repository;
 
@@ -6,6 +6,7 @@ import estacionamiento.dominio.modelo.VehiculoDTO;
 import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
 import estacionamiento.infraestructura.persistencia.builder.VehiculoBuilder;
 import estacionamiento.infraestructura.persistencia.entidad.VehiculoEntidad;
+import estacionamiento.infraestructura.persistencia.repositorio.IVehiculoJPA;
 
 @Repository
 public class VehiculoRepositorioImp implements IVehiculoRepositorio {
