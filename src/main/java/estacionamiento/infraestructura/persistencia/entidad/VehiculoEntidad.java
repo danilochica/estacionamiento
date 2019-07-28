@@ -10,16 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
 @Entity
-@Table(name = "vehiculo")
+@Table(name = "VEHICULO")
 public class VehiculoEntidad implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID_VEHICULO")
+	@Column(name = "ID_VEHICULO",unique = true, nullable = false)
 	private long idVehiculo;
 	
 	@Column(name = "TIPO_VEHICULO", nullable = false)
@@ -30,6 +29,7 @@ public class VehiculoEntidad implements Serializable {
 	
 	@Column(name = "PLACA", nullable = false)
 	private String placa;
+	
 	
 	public long getIdVehiculo() {
 		return idVehiculo;
@@ -69,6 +69,11 @@ public class VehiculoEntidad implements Serializable {
 		this.cilindraje = cilindraje;
 		this.placa = placa;
 	}
+
+	public VehiculoEntidad() {
+	}
+	
+	
 	
 	
 }

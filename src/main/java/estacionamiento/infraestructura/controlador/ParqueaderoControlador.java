@@ -28,7 +28,6 @@ public class ParqueaderoControlador {
 	@PostMapping
 	public Tiquete registrarIngresoDelVehiculoAlParqueadero(@RequestBody Vehiculo vehiculoDTO) {
 		Tiquete tiqueteVehiculoIngresado =  servicioParqueadero.ingresarVehiculoAlPaqueadero(vehiculoDTO);
-
 		return tiqueteVehiculoIngresado;
 	}
 	

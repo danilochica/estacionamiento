@@ -16,10 +16,10 @@ public class ManejadorServicioParqueadero {
 	
 	ParqueaderoServicio parqueaderoServicio;
 	
-	public ManejadorServicioParqueadero(ParqueaderoServicio ingresarVehiculoServicio) {
-		this.parqueaderoServicio = ingresarVehiculoServicio;
+	public ManejadorServicioParqueadero(ParqueaderoServicio parqueaderoServicio) {
+		this.parqueaderoServicio = parqueaderoServicio;
 	}
-	
+
 	public Tiquete ingresarVehiculoAlPaqueadero(Vehiculo vehiculoDTO) {
 		 return parqueaderoServicio.registrarIngresoVehiculoAlParqueadero(vehiculoDTO);
 	}

@@ -8,10 +8,12 @@ import static org.mockito.Mockito.when;
 
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 import estacionamiento.dominio.modelo.Vehiculo;
 import estacionamiento.dominio.repositorio.TiqueteRepositorio;
 import estacionamiento.dominio.repositorio.VehiculoRepositorio;
+import estacionamiento.dominio.servicio.CalendarioServicio;
 import estacionamiento.dominio.servicio.ParqueaderoServicio;
 import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 
@@ -23,6 +25,11 @@ public class ServicioParqueaderoTestUnitaria {
 	private static final int CILINDRAJE = 150;
 	
 	boolean resultado;
+	@Mock
+	TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
+	
+	@Mock
+	VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
 	
 	@Test
 	public void crearVehiculoTest() {
@@ -40,8 +47,6 @@ public class ServicioParqueaderoTestUnitaria {
 	public void testVehiculoPlacaConLetraInicialIgualA() {
 
 		String placaRegistrada = "ASQ523";
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 		
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
@@ -57,8 +62,6 @@ public class ServicioParqueaderoTestUnitaria {
 	public void testVehiculoPlacaConLetraInicialDiferente() {
 		
 		String placaRegistrada = "KSQ523";
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
@@ -73,8 +76,7 @@ public class ServicioParqueaderoTestUnitaria {
 	@Test
 	public void testHayDisponibilidadParqueoParaCarro() {
 
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
+		
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
@@ -87,9 +89,7 @@ public class ServicioParqueaderoTestUnitaria {
 	
 	@Test
 	public void testNoHayDisponibilidadParqueoParaCarro() {
-		
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
+
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
@@ -103,8 +103,6 @@ public class ServicioParqueaderoTestUnitaria {
 	@Test
 	public void testNoHayDisponibilidadParqueoParaMoto() {
 		
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("ASD12D");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
@@ -116,18 +114,42 @@ public class ServicioParqueaderoTestUnitaria {
 	}
 	
 	
-	@Test()
-	public void testCuandoElRegistroDelVehiculoEsExitoso() {
+	@Test
+	public void testNoPuedeIngresarPorDiaHabil() {
 		
-		
-		TiqueteRepositorio tiqueteRepositorio = mock(TiqueteRepositorio.class);
-		VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
-		
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("KEQ99D");
+		int diaDeLaSemanaDomingo = 0;
+		String placaVehiculo = "ASD12D";
+		CalendarioServicio calendarioServicio =mock(CalendarioServicio.class);
+		ParqueaderoServicio servicioConCalendario = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(placaVehiculo);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
-		servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+		when(calendarioServicio.diaDeLaSemana()).thenReturn(diaDeLaSemanaDomingo);
+		
+		try {
+			servicioConCalendario.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+		} catch (Exception e) {
+			assertEquals(ParqueaderoServicio.PLACA_INICIA_CON_A , e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	public void testNoPuedeIngresarMotoPorNoDisponibilidadDeCeldas() {
+		
+		int cantidadMotosParqueadas = 10;
+		String placaVehiculo = "MSD12D";
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(placaVehiculo);
+		Vehiculo vehiculoTest = vehiculoBuilder.build();
+		
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO)).thenReturn(cantidadMotosParqueadas);
+		
+		try {
+			servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+		} catch (Exception e) {
+			assertEquals(ParqueaderoServicio.NO_HAY_CELDAS_DISPONIBLES , e.getMessage());
+		}
 		
 	}
 	

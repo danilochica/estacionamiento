@@ -15,8 +15,8 @@ public class TiqueteTestDataBuilder {
 	private boolean estadoRegistro;
 	private Vehiculo vehiculo;
 	
-	public TiqueteTestDataBuilder conIdTransaccion(Long idTiquete) {
-		this.idTiquete = idTiquete;
+	public TiqueteTestDataBuilder conIdTransaccion(Long tiquete) {
+		this.idTiquete = tiquete;
 		return this;
 	}
 	

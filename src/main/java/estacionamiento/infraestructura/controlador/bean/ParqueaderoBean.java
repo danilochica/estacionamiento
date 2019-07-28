@@ -15,6 +15,6 @@ public class ParqueaderoBean {
 			VehiculoRepositorio vehiculoRepositorio) {
 		return new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
 	}
-	
-	
+
+
 }
