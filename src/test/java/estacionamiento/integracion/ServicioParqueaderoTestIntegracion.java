@@ -1,6 +1,5 @@
 package estacionamiento.integracion;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -21,13 +20,13 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import estacionamiento.EstacionamientoApplication;
-import estacionamiento.dominio.modelo.VehiculoDTO;
+import estacionamiento.dominio.modelo.Vehiculo;
 import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EstacionamientoApplication.class)
 @AutoConfigureMockMvc
-public class TestIntegracion {
+public class ServicioParqueaderoTestIntegracion {
 	
 	@Autowired
 	private WebApplicationContext context;
@@ -39,14 +38,16 @@ public class TestIntegracion {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
+	
+	
 	@Test
 	public void testCuandoSeAlmacenaUnVehiculo() throws Exception {
 		
-		String placaRegistrada = "FSQ523";
-		String tipoVehiculo= "Moto";
-		int cilindraje = 500;
+		String placaRegistrada = "ZZZ999";
+		String tipoVehiculo= "C";
+		int cilindraje = 400;
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada).conTipoVehiculo(tipoVehiculo).conCilindraje(cilindraje);
-		VehiculoDTO vehiculoTest = vehiculoBuilder.build();
+		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
 		mockMvc.perform(post("/parqueadero")
 				.content(new ObjectMapper().writeValueAsString(vehiculoTest))
@@ -56,13 +57,9 @@ public class TestIntegracion {
 				.andExpect(jsonPath("$.vehiculo.placa").value(placaRegistrada));
 	}
 	
-	@Test
-	public void testConsultarVehiculosParqueados() throws Exception {
-		
-		mockMvc.perform(get("/parqueadero/vehiculosParqueados"))				
-				.andExpect(status().isOk());
-		
-	}
+	
+
+
 
 
 	

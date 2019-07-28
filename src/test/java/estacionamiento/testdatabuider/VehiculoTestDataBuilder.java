@@ -1,6 +1,6 @@
 package estacionamiento.testdatabuider;
 
-import estacionamiento.dominio.modelo.VehiculoDTO;
+import estacionamiento.dominio.modelo.Vehiculo;
 
 public class VehiculoTestDataBuilder {
 	
@@ -29,8 +29,8 @@ public class VehiculoTestDataBuilder {
 		return this;
 	}
 	
-	public VehiculoDTO build() {
-		return new VehiculoDTO(this.idVehiculo,this.placa, this.tipoVehiculo, this.cilindraje);
+	public Vehiculo build() {
+		return new Vehiculo(this.idVehiculo,this.placa, this.tipoVehiculo, this.cilindraje);
 	}
 	
 

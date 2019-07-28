@@ -13,13 +13,13 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table (name = "GestionParqueadero")
-public class GestionParqueaderoEntidad{
+@Table (name = "TIQUETE")
+public class TiqueteEntidad{
 
 	@Id
 	@GeneratedValue
-	@Column (name = "ID_TRANSACCION", nullable = false)
-	private Long idTransaccion;
+	@Column (name = "ID_TIQUETE", nullable = false)
+	private Long idTiquete;
 	
 	@Column (name = "REGISTRO_INGRESO", nullable = false)
 	private Date registroIngreso;
@@ -37,17 +37,12 @@ public class GestionParqueaderoEntidad{
 	@JoinColumn(name = "ID_VEHICULO", nullable = false)
 	private VehiculoEntidad idVehiculo;
 
-
-	
-	
-	
-
-	public Long getIdTransaccion() {
-		return idTransaccion;
+	public Long getIdTiquete() {
+		return idTiquete;
 	}
 
-	public void setIdTransaccion(Long idTransaccion) {
-		this.idTransaccion = idTransaccion;
+	public void setIdTiquete(Long idTiquete) {
+		this.idTiquete = idTiquete;
 	}
 
 	public Date getRegistroIngreso() {
@@ -89,19 +84,19 @@ public class GestionParqueaderoEntidad{
 	public void setIdVehiculo(VehiculoEntidad idVehiculo) {
 		this.idVehiculo = idVehiculo;
 	}
-	
-	public GestionParqueaderoEntidad(Long idTransaccion, Date registroIngreso, Date registroSalida,
-			BigDecimal valorServicio, Boolean estado, VehiculoEntidad vehiculo) {
-		this.idTransaccion = idTransaccion;
+
+	public TiqueteEntidad(Long idTiquete, Date registroIngreso, Date registroSalida, BigDecimal valorServicio,
+			Boolean estado, VehiculoEntidad idVehiculo) {
+		this.idTiquete = idTiquete;
 		this.registroIngreso = registroIngreso;
 		this.registroSalida = registroSalida;
 		this.valorServicio = valorServicio;
 		this.estado = estado;
-		this.idVehiculo = vehiculo;
+		this.idVehiculo = idVehiculo;
 	}
 	
-	public GestionParqueaderoEntidad() { }
 	
+
 	
 	
 }

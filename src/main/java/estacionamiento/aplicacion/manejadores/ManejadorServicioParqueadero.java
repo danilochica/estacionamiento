@@ -6,31 +6,30 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
-import estacionamiento.dominio.modelo.VehiculoDTO;
+import estacionamiento.dominio.modelo.Tiquete;
+import estacionamiento.dominio.modelo.Vehiculo;
 import estacionamiento.dominio.servicio.ParqueaderoServicio;
 
 @Service
 @Transactional
 public class ManejadorServicioParqueadero {
 	
-	ParqueaderoServicio ingresarVehiculoServicio;
+	ParqueaderoServicio parqueaderoServicio;
 	
 	public ManejadorServicioParqueadero(ParqueaderoServicio ingresarVehiculoServicio) {
-		this.ingresarVehiculoServicio = ingresarVehiculoServicio;
+		this.parqueaderoServicio = ingresarVehiculoServicio;
 	}
 	
-	public VehiculoDTO  crearVehiculo(VehiculoDTO vehiculoDTO) {
-		 return ingresarVehiculoServicio.registrarVehiculo(vehiculoDTO);
+	public Tiquete ingresarVehiculoAlPaqueadero(Vehiculo vehiculoDTO) {
+		 return parqueaderoServicio.registrarIngresoVehiculoAlParqueadero(vehiculoDTO);
 	}
 	
-	public GestionParqueaderoDTO guardarIngresoVehiculoAlParqueadero(VehiculoDTO vehiculoDTO) {
-		return this.ingresarVehiculoServicio.registarIngresoAlParqueadero(vehiculoDTO);
+	public List<Tiquete> listaVehiculosParqueados(){
+		return this.parqueaderoServicio.listarVehiculosParqueados();
 	}
 	
-	public List<GestionParqueaderoDTO> listaVehiculosParqueados(){
-		return this.ingresarVehiculoServicio.listarVehiculosParqueados();
-		
+	public Tiquete consultarVehiculoPorPlacaParqueado(String placa) {
+		return this.parqueaderoServicio.consultarVehiculoPorPlacaParqueado(placa);
 	}
 
 }

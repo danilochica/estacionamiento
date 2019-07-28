@@ -7,34 +7,36 @@ import java.util.List;
 
 import estacionamiento.dominio.excepcion.ExcepcionPlacaIniciaConA;
 import estacionamiento.dominio.excepcion.ExcepecionNoHayCeldasDisponibles;
-import estacionamiento.dominio.modelo.GestionParqueaderoDTO;
-import estacionamiento.dominio.modelo.VehiculoDTO;
-import estacionamiento.dominio.repositorio.IGestionParqueaderoRepositorio;
-import estacionamiento.dominio.repositorio.IVehiculoRepositorio;
+import estacionamiento.dominio.modelo.Tiquete;
+import estacionamiento.dominio.modelo.Vehiculo;
+import estacionamiento.dominio.modelo.VehiculoEnum;
+import estacionamiento.dominio.repositorio.TiqueteRepositorio;
+import estacionamiento.dominio.repositorio.VehiculoRepositorio;
 
 public class ParqueaderoServicio {
 	
-	private static final boolean ESTADO = true;
 	public static final int CILINDRAJE_PARA_CALCULAR_RECARGO = 500;
 	public static final String LETRA_INICIAL_PLACA= "A";
-	public static final String MOTO= "Moto";
-	public static final String CARRO = "Carro";
-	public static final int CAPACIDAD_MAXIMA_DE_CARROS = 20;
-	public static final int CAPACIDAD_MAXIMA_DE_MOTOS = 10;
-	
+
 	public static final String PLACA_INICIA_CON_A = "No puede ingresar porque no esta en un dia habil";
 	public static final String NO_HAY_CELDAS_DISPONIBLES ="No hay celdas disponibles";
 	public static final String PARQUEO_EXITOSO ="Registro exitoso";
 	
 	
-	IGestionParqueaderoRepositorio gestionParqueaderoRepositorio;
-	IVehiculoRepositorio vehiculoRepositorio;
+	TiqueteRepositorio tiqueteRepositorio;
+	VehiculoRepositorio vehiculoRepositorio;
+	
+	public ParqueaderoServicio(TiqueteRepositorio tiqueteRepositorio, VehiculoRepositorio vehiculoRepositorio) {
+		this.tiqueteRepositorio = tiqueteRepositorio;
+		this.vehiculoRepositorio = vehiculoRepositorio;
+	}
 
-	public boolean hayDisponibilidadParqueo(VehiculoDTO vehiculoDTO) {
+	public boolean hayDisponibilidadParqueo(Vehiculo vehiculo) {
 		boolean hayCeldas;
-		int cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculoDTO.getTipoVehiculo());
-		hayCeldas = vehiculoDTO.esCarro() ? 
-				cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_CARROS : cantidadVehiculosParqueados<CAPACIDAD_MAXIMA_DE_MOTOS;
+		int cantidadVehiculosParqueados = cantidadCeldasOcupadasPorTipoVehiculo(vehiculo.getTipoVehiculo());
+		hayCeldas = vehiculo.getTipoVehiculo().equals(VehiculoEnum.CARRO.getTipoVehiculo())  ? 
+				cantidadVehiculosParqueados< VehiculoEnum.CARRO.getCapacidadMaximaVehiculosParqueados()  : 
+					cantidadVehiculosParqueados<VehiculoEnum.MOTO.getCapacidadMaximaVehiculosParqueados();
 		return hayCeldas;
 	}
 	
@@ -44,7 +46,7 @@ public class ParqueaderoServicio {
 	}
 	
 	public int cantidadCeldasOcupadasPorTipoVehiculo(String tipoVehiculo) {
-		return tipoVehiculo.equals(MOTO) ? gestionParqueaderoRepositorio.contarMotosParqueadas() : gestionParqueaderoRepositorio.contarCarrosParqueados();
+		return tipoVehiculo.equals(VehiculoEnum.MOTO.getTipoVehiculo()) ? tiqueteRepositorio.contarMotosParqueadas() : tiqueteRepositorio.contarCarrosParqueados();
 	}
 	
 	public boolean esLetraInicialDeRestriccion(String placa) {
@@ -60,41 +62,43 @@ public class ParqueaderoServicio {
 	    return calendario.getTime();
 	}
 	
-	public VehiculoDTO registrarVehiculo(VehiculoDTO vehiculoDTO) {
+	public Tiquete registrarIngresoVehiculoAlParqueadero(Vehiculo vehiculo) {
 		
-		if(esLetraInicialDeRestriccion(vehiculoDTO.getPlaca()) && !esDiaHabilParaPlacaConLetraInicialA()){
+		if(esLetraInicialDeRestriccion(vehiculo.getPlaca()) && !esDiaHabilParaPlacaConLetraInicialA()){
 			throw new ExcepcionPlacaIniciaConA(PLACA_INICIA_CON_A);
 		}
 		
-		if(!hayDisponibilidadParqueo(vehiculoDTO)) {
+		if(!hayDisponibilidadParqueo(vehiculo)) {
 			throw new ExcepecionNoHayCeldasDisponibles(NO_HAY_CELDAS_DISPONIBLES);
 		}
 		
-		VehiculoDTO vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculoDTO);
-		return vehiculoGuardado;
+		Vehiculo vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculo);
+		Tiquete tiqueteGenerado = generarTiqueteDeIngreso(vehiculoGuardado);
+		
+		
+		return tiqueteGenerado;
 		
 	}
 
-	public GestionParqueaderoDTO registarIngresoAlParqueadero(VehiculoDTO vehiculoDTO) {
+	public Tiquete generarTiqueteDeIngreso(Vehiculo vehiculoDTO) {
 		
-		GestionParqueaderoDTO gestionParqueaderoDTO = new GestionParqueaderoDTO(obtenerfechaAtual(), true, vehiculoDTO);
-		GestionParqueaderoDTO registroAlmacenado = gestionParqueaderoRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
+		Tiquete gestionParqueaderoDTO = new Tiquete(obtenerfechaAtual(), true, vehiculoDTO);
+		Tiquete registroAlmacenado = tiqueteRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
 		
 		return registroAlmacenado;
 		
 	}
 	
-	public List<GestionParqueaderoDTO> listarVehiculosParqueados(){
-		 List<GestionParqueaderoDTO> vehiculosParqueados = gestionParqueaderoRepositorio.listaVehiculosParqueados(ESTADO);
+	public List<Tiquete> listarVehiculosParqueados(){
+		 List<Tiquete> vehiculosParqueados = tiqueteRepositorio.listaVehiculosParqueados();
 		 return vehiculosParqueados;
 	}
 	
-	public ParqueaderoServicio() {}
 	
-	public ParqueaderoServicio(IGestionParqueaderoRepositorio gestionParqueaderoRepositorio,
-			IVehiculoRepositorio vehiculoRepositorio) {
-		this.gestionParqueaderoRepositorio = gestionParqueaderoRepositorio;
-		this.vehiculoRepositorio = vehiculoRepositorio;
+	public Tiquete consultarVehiculoPorPlacaParqueado(String placa) {
+		Tiquete consultaVehiculo = tiqueteRepositorio.consultarVehiculoParqueadoPorPlaca(placa);
+		return consultaVehiculo;
+		
 	}
 	
 }

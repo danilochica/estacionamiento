@@ -8,10 +8,7 @@ import estacionamiento.infraestructura.persistencia.entidad.VehiculoEntidad;
 
 @Repository
 public interface IVehiculoJPA extends JpaRepository<VehiculoEntidad, Long> {
-	
-	//@Query("FROM Vehiculo V WHERE V.placa = :placa")
-	//VehiculoEntidad buscarVehiculoPorPlaca(String placa);
-	
-	
 
+	
+	
 }

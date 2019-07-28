@@ -70,6 +70,5 @@ public class VehiculoEntidad implements Serializable {
 		this.placa = placa;
 	}
 	
-	public VehiculoEntidad() {	}
 	
 }
