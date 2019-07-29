@@ -38,12 +38,6 @@ public class ParqueaderoControlador {
 		return vehiculosParqueados;
 	}
 	
-	@GetMapping(value = "/vehiculo/{placa}")
-	public  Tiquete consultarVehiculoPorPlaca(@PathVariable String placa) {
-		Tiquete consultaVehiculoPorPlaca = servicioParqueadero.consultarVehiculoPorPlacaParqueado(placa);
-		return consultaVehiculoPorPlaca;
-	
-	}
 	
 	@PutMapping(value = "/registrarSalida/{placa}")
 	public Tiquete registrarSalidaVehiculo(@PathVariable String placa) {

@@ -28,9 +28,6 @@ public class ManejadorServicioParqueadero {
 		return this.parqueaderoServicio.listarVehiculosParqueados();
 	}
 	
-	public Tiquete consultarVehiculoPorPlacaParqueado(String placa) {
-		return this.parqueaderoServicio.consultarVehiculoPorPlacaParqueado(placa);
-	}
 	
 	public Tiquete registraSalidaVehiculo(String placa) {
 		return this.parqueaderoServicio.registrarSalidaVehiculo(placa);
