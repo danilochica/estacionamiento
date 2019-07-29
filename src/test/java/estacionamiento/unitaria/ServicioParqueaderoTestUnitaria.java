@@ -148,7 +148,6 @@ public class ServicioParqueaderoTestUnitaria {
 		
 		int cantidadMotosParqueadas = 10;
 		String placaVehiculo = "MSD12D";
-		CalendarioServicio calendarioServicio = mock(CalendarioServicio.class);
 		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(placaVehiculo);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();

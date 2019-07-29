@@ -80,7 +80,6 @@ public class ParqueaderoServicio {
 	}
 
 	public Tiquete generarTiqueteDeIngreso(Vehiculo vehiculoDTO) {
-		CalendarioServicio calendarioServicio = new CalendarioServicio();
 		Tiquete gestionParqueaderoDTO = new Tiquete(calendarioServicio.obtenerfechaAtual(), true, vehiculoDTO);
 		Tiquete registroAlmacenado = tiqueteRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
 		
@@ -103,9 +102,9 @@ public class ParqueaderoServicio {
 	
 	public BigDecimal calcularValorServicio(String tipoVehiculo, int cilindraje, int dias, int  horas) {
 		
-		BigDecimal valorServicioPorHora = new BigDecimal(0);
-		BigDecimal valorServicioPorDia= new BigDecimal(0);
-		BigDecimal valorTotalServicio = new BigDecimal(0);
+		BigDecimal valorServicioPorHora;
+		BigDecimal valorServicioPorDia;
+		BigDecimal valorTotalServicio;
 		
 		if(tipoVehiculo.equals(VehiculoEnum.MOTO.getTipoVehiculo())) {
 			
@@ -158,7 +157,7 @@ public class ParqueaderoServicio {
         
         if(diferencia>SEGUNDOS_HORA) {
         	horas = calcularDiferenciaEnHoras(diferencia);
-            diferencia = calcularDiferenciaEnHoras(diferencia);
+            diferencia =  diferencia-(dias*SEGUNDOS_HORA);
         }
         
         BigDecimal valorServicio = calcularValorServicio(registroVehiculoParqueadoPorPlaca.getVehiculo().getTipoVehiculo(), registroVehiculoParqueadoPorPlaca.getVehiculo().getCilindraje(), dias, horas);
