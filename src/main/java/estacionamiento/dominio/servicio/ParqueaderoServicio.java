@@ -1,5 +1,7 @@
 package estacionamiento.dominio.servicio;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import estacionamiento.dominio.excepcion.ExcepcionPlacaIniciaConA;
@@ -12,12 +14,18 @@ import estacionamiento.dominio.repositorio.VehiculoRepositorio;
 
 public class ParqueaderoServicio {
 	
+	private static final int RECARGO_POR_CILINDRAJE = 2000;
+	private static final int CILINDRAJE_MAYOR_A_500 = 500;
+	private static final int TOPE_PARA_COBRAR_HORAS = 9;
+	private static final int SEGUNDOS_HORA = 3600;
+	private static final int SEGUNDOS_DIA = 86400;
 	private static final int VALOR_PARA_DIAS_DOMINGO_Y_LUNES = 2;
 	public static final int CILINDRAJE_PARA_CALCULAR_RECARGO = 500;
 	public static final String LETRA_INICIAL_PLACA= "A";
 
 	public static final String PLACA_INICIA_CON_A = "No puede ingresar porque no esta en un dia habil";
 	public static final String NO_HAY_CELDAS_DISPONIBLES ="No hay celdas disponibles";
+	public static final String VEHICULO_NO_REGISTRADO ="No hay celdas disponibles";
 	
 	
 	TiqueteRepositorio tiqueteRepositorio;
@@ -28,6 +36,8 @@ public class ParqueaderoServicio {
 		this.vehiculoRepositorio = vehiculoRepositorio;
 
 	}
+	
+	
 
 	public boolean hayDisponibilidadParqueo(Vehiculo vehiculo) {
 		boolean hayCeldas;
@@ -63,8 +73,7 @@ public class ParqueaderoServicio {
 		
 		Vehiculo vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculo);
 		Tiquete tiqueteGenerado = generarTiqueteDeIngreso(vehiculoGuardado);
-		
-		
+			
 		return tiqueteGenerado;
 		
 	}
@@ -90,4 +99,86 @@ public class ParqueaderoServicio {
 		
 	}
 	
+	
+	public BigDecimal calcularValorServicio(String tipoVehiculo, int cilindraje, int dias, int  horas) {
+		
+		BigDecimal valorServicioPorHora = new BigDecimal(0);
+		BigDecimal valorServicioPorDia= new BigDecimal(0);
+		BigDecimal valorTotalServicio = new BigDecimal(0);
+		
+		if(tipoVehiculo.equals(VehiculoEnum.MOTO.getTipoVehiculo())) {
+			
+			if(horas < TOPE_PARA_COBRAR_HORAS) {
+				valorServicioPorHora = new BigDecimal(horas).multiply(new BigDecimal(VehiculoEnum.MOTO.getValorHora()));
+			}else {
+				valorServicioPorHora = new BigDecimal(VehiculoEnum.MOTO.getValorDia());
+			}
+			if(dias > 0) {
+				valorServicioPorDia = new BigDecimal(dias).multiply(new BigDecimal(VehiculoEnum.MOTO.getValorDia()));
+			}
+			
+			if(cilindraje > CILINDRAJE_MAYOR_A_500) {
+				valorTotalServicio = valorServicioPorDia.add(valorServicioPorHora.add(new BigDecimal(RECARGO_POR_CILINDRAJE)));
+			}else {
+				valorTotalServicio = valorServicioPorDia.add(valorServicioPorHora);
+			}
+		} else {
+			
+			if(horas < TOPE_PARA_COBRAR_HORAS) {
+				valorServicioPorHora = new BigDecimal(horas).multiply(new BigDecimal(VehiculoEnum.CARRO.getValorHora()));
+			}else {
+				valorServicioPorHora = new BigDecimal(VehiculoEnum.CARRO.getValorDia());
+			}
+			if(dias > 0) {
+				valorServicioPorDia = new BigDecimal(dias).multiply(new BigDecimal(VehiculoEnum.CARRO.getValorDia()));
+			}
+
+			valorTotalServicio = valorServicioPorDia.add(valorServicioPorHora);
+			
+		}
+		return valorTotalServicio;
+	}
+	
+	public Tiquete registrarSalidaVehiculo(String placa) {
+		
+		int dias = 0;
+		int horas = 0;
+		
+		CalendarioServicio calendarioServicio = new CalendarioServicio();
+		Date registroSalidaVehiculo = calendarioServicio.obtenerfechaAtual();
+		Tiquete registroVehiculoParqueadoPorPlaca = consultarVehiculoPorPlacaParqueado(placa);
+		registroVehiculoParqueadoPorPlaca.setFechaSalida(registroSalidaVehiculo);
+
+		int diferencia = diferenciaEntreFechas(registroVehiculoParqueadoPorPlaca.getFechaSalida(), registroVehiculoParqueadoPorPlaca.getFechaIngreso());
+        
+        if(diferencia>SEGUNDOS_DIA) {
+        	dias = calcularDiferenciaEnDia(diferencia);
+        	diferencia = diferencia-(dias*SEGUNDOS_DIA);
+        }
+        
+        if(diferencia>SEGUNDOS_HORA) {
+        	horas = calcularDiferenciaEnHoras(diferencia);
+            diferencia = calcularDiferenciaEnHoras(diferencia);
+        }
+        
+        BigDecimal valorServicio = calcularValorServicio(registroVehiculoParqueadoPorPlaca.getVehiculo().getTipoVehiculo(), registroVehiculoParqueadoPorPlaca.getVehiculo().getCilindraje(), dias, horas);
+        Tiquete vehiculoParaSalir = new Tiquete(registroVehiculoParqueadoPorPlaca.getIdTiquete(), registroVehiculoParqueadoPorPlaca.getFechaIngreso(), registroVehiculoParqueadoPorPlaca.getFechaSalida(), valorServicio, false, registroVehiculoParqueadoPorPlaca.getVehiculo());
+        Tiquete registroProcedimientoSalidaTerminado = tiqueteRepositorio.regitrarSalidaVehiculoDelParqueadero(vehiculoParaSalir);
+
+        return registroProcedimientoSalidaTerminado;
+
+	}
+	
+	public int diferenciaEntreFechas(Date registroSalidaVehiculo, Date registroIngresoVehiculo) {
+		return (int) ((registroSalidaVehiculo.getTime()- registroIngresoVehiculo.getTime())/1000);
+	}
+	
+	public int calcularDiferenciaEnDia(int diferencia) {
+		 return (diferencia/SEGUNDOS_DIA);
+        
+	}
+	
+	public int calcularDiferenciaEnHoras(int diferencia) {  
+        return (diferencia/SEGUNDOS_HORA);
+	}
 }

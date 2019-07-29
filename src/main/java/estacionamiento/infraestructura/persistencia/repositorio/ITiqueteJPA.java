@@ -24,7 +24,7 @@ public interface ITiqueteJPA extends JpaRepository<TiqueteEntidad, Long>{
 		    nativeQuery = true)
 	List<TiqueteEntidad> vehiculosParqueados();
 	
-	@Query(value = "SELECT v.tipo_vehiculo, t.Registro_ingreso, v.placa FROM vehiculo v,Tiquete t WHERE t.id_vehiculo =  v.id_vehiculo and t.estado = true and v.placa= :placa",
+	@Query(value = "SELECT * FROM vehiculo v,Tiquete t WHERE t.id_vehiculo =  v.id_vehiculo and t.estado = true and v.placa= :placa",
 		    nativeQuery = true)
 	TiqueteEntidad consultarVehiculoParqueadoPorPlaca(@Param("placa") String placa);
 

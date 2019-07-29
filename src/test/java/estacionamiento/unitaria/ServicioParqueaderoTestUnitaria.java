@@ -6,11 +6,14 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
+import java.util.Date;
 
 import org.junit.Test;
 import org.mockito.Mock;
 
 import estacionamiento.dominio.modelo.Vehiculo;
+import estacionamiento.dominio.modelo.VehiculoEnum;
 import estacionamiento.dominio.repositorio.TiqueteRepositorio;
 import estacionamiento.dominio.repositorio.VehiculoRepositorio;
 import estacionamiento.dominio.servicio.CalendarioServicio;
@@ -150,6 +153,76 @@ public class ServicioParqueaderoTestUnitaria {
 		} catch (Exception e) {
 			assertEquals(ParqueaderoServicio.NO_HAY_CELDAS_DISPONIBLES , e.getMessage());
 		}
+		
+	}
+	
+	@Test
+	public void testValidarTarifaMoto6Horas() {
+		
+		int horas = 6;
+		int dias = 0;
+		int cilindraje = 0;
+		BigDecimal valorTotal = new BigDecimal(3000);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		
+		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
+		
+		assertEquals(valorTotal, valorACancelar);
+		
+	}
+	
+	@Test
+	public void testValidarTarifaMotoConCilindrajeMayorAQuinientos() {
+		
+		int horas = 6;
+		int dias = 0;
+		int cilindraje = 600;
+		BigDecimal valorTotal = new BigDecimal(5000);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		
+		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
+		
+		assertEquals(valorTotal, valorACancelar);
+		
+	}
+	
+	@Test
+	public void testValidarTarifaSuperiorANueveHoras() {
+		
+		int horas = 10;
+		int dias = 0;
+		int cilindraje = 0;
+		BigDecimal valorTotal = new BigDecimal(4000);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		
+		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
+		
+		assertEquals(valorTotal, valorACancelar);
+		
+	}
+	
+	@Test
+	public void testValidarTarifaConHorasYDiaCarro() {
+		int horas = 3;
+		int dias = 1;
+		int cilindraje = 0;
+		BigDecimal valorTotal = new BigDecimal(11000);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		
+		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.CARRO.getTipoVehiculo(), cilindraje, dias, horas);
+		
+		assertEquals(valorTotal, valorACancelar);
+	}
+	
+	@Test
+	public void testCalcularDiferenciaFechas() {
+		CalendarioServicio calendarioServicio = new CalendarioServicio();
+		Date fechaActual = calendarioServicio.obtenerfechaAtual();
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		
+		int diferenciaEntreFechas = parqueaderoServicio.diferenciaEntreFechas(fechaActual, fechaActual);
+		
+		assertEquals(0, diferenciaEntreFechas);
 		
 	}
 	

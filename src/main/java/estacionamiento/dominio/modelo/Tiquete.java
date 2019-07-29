@@ -38,6 +38,10 @@ public class Tiquete {
 		return vehiculo;
 	}
 	
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
 	public Tiquete(Long idTiquete, Date fechaIngreso, Date fechaSalida, BigDecimal valorServicio,
 			Boolean estadoRegistro, Vehiculo vehiculo) {
 		this.idTiquete = idTiquete;

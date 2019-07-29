@@ -51,4 +51,12 @@ public class TiqueteRepositorioImp implements TiqueteRepositorio{
 		return vehiculosParqueados;
 	}
 
+	@Override
+	public Tiquete regitrarSalidaVehiculoDelParqueadero(Tiquete tiquete) {
+		TiqueteEntidad tiqueteEntidad = TiqueteBuilder.convertirAEntidad(tiquete);
+		TiqueteEntidad registroModificado = repositorioJPA.save(tiqueteEntidad);
+		Tiquete registroAlmacenado = TiqueteBuilder.convertirAModelo(registroModificado);
+		return registroAlmacenado;
+	}
+
 }

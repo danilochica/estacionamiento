@@ -7,7 +7,9 @@ import estacionamiento.dominio.modelo.Tiquete;
 
 public interface TiqueteRepositorio {
 
-	Tiquete registarIngresoVehiculoAlParqueadero(Tiquete gestionParqueaderoDTO);
+	Tiquete registarIngresoVehiculoAlParqueadero(Tiquete tiquete);
+	
+	Tiquete regitrarSalidaVehiculoDelParqueadero(Tiquete tiquete);
 	
 	int contarMotosParqueadas();
 	

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,13 @@ public class ParqueaderoControlador {
 		Tiquete consultaVehiculoPorPlaca = servicioParqueadero.consultarVehiculoPorPlacaParqueado(placa);
 		return consultaVehiculoPorPlaca;
 	
+	}
+	
+	@PutMapping(value = "/registrarSalida/{placa}")
+	public Tiquete registrarSalidaVehiculo(@PathVariable String placa) {
+		
+		Tiquete registroSalidaVehiculo = servicioParqueadero.registraSalidaVehiculo(placa);
+		return registroSalidaVehiculo;
 	}
 	
 
