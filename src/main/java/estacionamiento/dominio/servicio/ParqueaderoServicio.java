@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import estacionamiento.dominio.excepcion.ExcepcionPlacaIniciaConA;
 import estacionamiento.dominio.excepcion.ExcepecionNoHayCeldasDisponibles;
 import estacionamiento.dominio.modelo.Tiquete;
@@ -147,7 +145,6 @@ public class ParqueaderoServicio {
 		int dias = 0;
 		int horas = 0;
 		
-		CalendarioServicio calendarioServicio = new CalendarioServicio();
 		Date registroSalidaVehiculo = calendarioServicio.obtenerfechaAtual();
 		Tiquete registroVehiculoParqueadoPorPlaca = consultarVehiculoPorPlacaParqueado(placa);
 		registroVehiculoParqueadoPorPlaca.setFechaSalida(registroSalidaVehiculo);
