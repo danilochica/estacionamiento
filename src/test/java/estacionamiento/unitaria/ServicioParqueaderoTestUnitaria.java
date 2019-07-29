@@ -3,6 +3,7 @@ package estacionamiento.unitaria;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,6 +35,10 @@ public class ServicioParqueaderoTestUnitaria {
 	@Mock
 	VehiculoRepositorio vehiculoRepositorio = mock(VehiculoRepositorio.class);
 	
+	@Mock
+	CalendarioServicio calendarioServicio = mock(CalendarioServicio.class);
+	
+	
 	@Test
 	public void crearVehiculoTest() {
 		VehiculoTestDataBuilder vehiculoTestDataBuilder = new VehiculoTestDataBuilder().conPlaca(PLACA_CON_LETRA_A).conTipoVehiculo(TIPO_VEHICULO_MOTO).conCilindraje(CILINDRAJE);
@@ -50,7 +55,7 @@ public class ServicioParqueaderoTestUnitaria {
 	public void testVehiculoPlacaConLetraInicialIgualA() {
 
 		String placaRegistrada = "ASQ523";
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
@@ -65,7 +70,7 @@ public class ServicioParqueaderoTestUnitaria {
 	public void testVehiculoPlacaConLetraInicialDiferente() {
 		
 		String placaRegistrada = "KSQ523";
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
@@ -80,7 +85,7 @@ public class ServicioParqueaderoTestUnitaria {
 	public void testHayDisponibilidadParqueoParaCarro() {
 
 		
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(15);
@@ -93,7 +98,7 @@ public class ServicioParqueaderoTestUnitaria {
 	@Test
 	public void testNoHayDisponibilidadParqueoParaCarro() {
 
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca("DMS125");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(22);
@@ -106,7 +111,7 @@ public class ServicioParqueaderoTestUnitaria {
 	@Test
 	public void testNoHayDisponibilidadParqueoParaMoto() {
 		
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("ASD12D");
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO)).thenReturn(22);
@@ -120,17 +125,18 @@ public class ServicioParqueaderoTestUnitaria {
 	@Test
 	public void testNoPuedeIngresarPorDiaHabil() {
 		
-		int diaDeLaSemanaDomingo = 0;
+		int diaDeLaSemanaDomingo = 5;
 		String placaVehiculo = "ASD12D";
-		CalendarioServicio calendarioServicio =mock(CalendarioServicio.class);
-		ParqueaderoServicio servicioConCalendario = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		CalendarioServicio calendarioServicio2 = mock(CalendarioServicio.class);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio, calendarioServicio2);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(placaVehiculo);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
-		when(calendarioServicio.diaDeLaSemana()).thenReturn(diaDeLaSemanaDomingo);
+		when(calendarioServicio2.diaDeLaSemana()).thenReturn(diaDeLaSemanaDomingo);
 		
 		try {
-			servicioConCalendario.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+			servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+			fail();
 		} catch (Exception e) {
 			assertEquals(ParqueaderoServicio.PLACA_INICIA_CON_A , e.getMessage());
 		}
@@ -142,7 +148,8 @@ public class ServicioParqueaderoTestUnitaria {
 		
 		int cantidadMotosParqueadas = 10;
 		String placaVehiculo = "MSD12D";
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		CalendarioServicio calendarioServicio = mock(CalendarioServicio.class);
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca(placaVehiculo);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
@@ -150,6 +157,7 @@ public class ServicioParqueaderoTestUnitaria {
 		
 		try {
 			servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+			fail();
 		} catch (Exception e) {
 			assertEquals(ParqueaderoServicio.NO_HAY_CELDAS_DISPONIBLES , e.getMessage());
 		}
@@ -163,7 +171,7 @@ public class ServicioParqueaderoTestUnitaria {
 		int dias = 0;
 		int cilindraje = 0;
 		BigDecimal valorTotal = new BigDecimal(3000);
-		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
 		
@@ -178,7 +186,7 @@ public class ServicioParqueaderoTestUnitaria {
 		int dias = 0;
 		int cilindraje = 600;
 		BigDecimal valorTotal = new BigDecimal(5000);
-		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
 		
@@ -193,7 +201,7 @@ public class ServicioParqueaderoTestUnitaria {
 		int dias = 0;
 		int cilindraje = 0;
 		BigDecimal valorTotal = new BigDecimal(4000);
-		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.MOTO.getTipoVehiculo(), cilindraje, dias, horas);
 		
@@ -207,7 +215,7 @@ public class ServicioParqueaderoTestUnitaria {
 		int dias = 1;
 		int cilindraje = 0;
 		BigDecimal valorTotal = new BigDecimal(11000);
-		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.CARRO.getTipoVehiculo(), cilindraje, dias, horas);
 		
@@ -216,9 +224,8 @@ public class ServicioParqueaderoTestUnitaria {
 	
 	@Test
 	public void testCalcularDiferenciaFechas() {
-		CalendarioServicio calendarioServicio = new CalendarioServicio();
-		Date fechaActual = calendarioServicio.obtenerfechaAtual();
-		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio);
+		Date fechaActual = new Date();
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		int diferenciaEntreFechas = parqueaderoServicio.diferenciaEntreFechas(fechaActual, fechaActual);
 		

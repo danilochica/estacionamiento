@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import estacionamiento.dominio.excepcion.ExcepcionPlacaIniciaConA;
 import estacionamiento.dominio.excepcion.ExcepecionNoHayCeldasDisponibles;
 import estacionamiento.dominio.modelo.Tiquete;
@@ -30,14 +32,15 @@ public class ParqueaderoServicio {
 	
 	TiqueteRepositorio tiqueteRepositorio;
 	VehiculoRepositorio vehiculoRepositorio;
+	CalendarioServicio calendarioServicio;
 
-	public ParqueaderoServicio(TiqueteRepositorio tiqueteRepositorio, VehiculoRepositorio vehiculoRepositorio) {
+	public ParqueaderoServicio(TiqueteRepositorio tiqueteRepositorio, VehiculoRepositorio vehiculoRepositorio, CalendarioServicio calendarioServicio) {
 		this.tiqueteRepositorio = tiqueteRepositorio;
 		this.vehiculoRepositorio = vehiculoRepositorio;
-
+		this.calendarioServicio = calendarioServicio;
 	}
-	
-	
+
+
 
 	public boolean hayDisponibilidadParqueo(Vehiculo vehiculo) {
 		boolean hayCeldas;
@@ -61,9 +64,9 @@ public class ParqueaderoServicio {
 	public Tiquete registrarIngresoVehiculoAlParqueadero(Vehiculo vehiculo) {
 		
 		
-		CalendarioServicio calendarioServicio = new CalendarioServicio();
 		int diaDeLaSemana = calendarioServicio.diaDeLaSemana();
-		if(esLetraInicialDeRestriccion(vehiculo.getPlaca()) &&  diaDeLaSemana < VALOR_PARA_DIAS_DOMINGO_Y_LUNES){
+		
+		if(esLetraInicialDeRestriccion(vehiculo.getPlaca()) &&  diaDeLaSemana > VALOR_PARA_DIAS_DOMINGO_Y_LUNES){
 			throw new ExcepcionPlacaIniciaConA(PLACA_INICIA_CON_A);
 		}
 		
