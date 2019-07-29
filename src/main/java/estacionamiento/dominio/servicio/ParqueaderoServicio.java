@@ -103,7 +103,7 @@ public class ParqueaderoServicio {
 	public BigDecimal calcularValorServicio(String tipoVehiculo, int cilindraje, int dias, int  horas) {
 		
 		BigDecimal valorServicioPorHora;
-		BigDecimal valorServicioPorDia;
+		BigDecimal valorServicioPorDia = new BigDecimal(0);
 		BigDecimal valorTotalServicio;
 		
 		if(tipoVehiculo.equals(VehiculoEnum.MOTO.getTipoVehiculo())) {
