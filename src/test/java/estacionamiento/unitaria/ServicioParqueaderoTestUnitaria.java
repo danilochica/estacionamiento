@@ -217,7 +217,7 @@ public class ServicioParqueaderoTestUnitaria {
 	}
 	
 	@Test
-	public void testValidarTarifaMoto6Horas() {
+	public void testValidarTarifaMotoSeisHoras() {
 		
 		int horas = 6;
 		int dias = 0;
@@ -267,6 +267,19 @@ public class ServicioParqueaderoTestUnitaria {
 		int dias = 1;
 		int cilindraje = 0;
 		BigDecimal valorTotal = new BigDecimal(11000);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
+		
+		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.CARRO.getTipoVehiculo(), cilindraje, dias, horas);
+		
+		assertEquals(valorTotal, valorACancelar);
+	}
+	
+	@Test
+	public void testValidarTarifaConHorasCarro() {
+		int horas = 3;
+		int dias = 0;
+		int cilindraje = 0;
+		BigDecimal valorTotal = new BigDecimal(3000);
 		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		
 		BigDecimal valorACancelar = parqueaderoServicio.calcularValorServicio(VehiculoEnum.CARRO.getTipoVehiculo(), cilindraje, dias, horas);
