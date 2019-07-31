@@ -121,6 +121,19 @@ public class ServicioParqueaderoTestUnitaria {
 		assertFalse(resultado);
 	}
 	
+	@Test
+	public void testHayDisponibilidadParqueoParaMoto() {
+		
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_MOTO).conPlaca("FSD12D");
+		Vehiculo vehiculoTest = vehiculoBuilder.build();
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_MOTO)).thenReturn(8);
+
+		resultado = servicio.hayDisponibilidadParqueo(vehiculoTest);
+
+		assertTrue(resultado);
+	}
+	
 	
 	@Test
 	public void testNoPuedeIngresarPorDiaHabil() {
