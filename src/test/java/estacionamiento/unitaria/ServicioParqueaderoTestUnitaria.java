@@ -197,6 +197,26 @@ public class ServicioParqueaderoTestUnitaria {
 	}
 	
 	@Test
+	public void testNoPuedeIngresarCarroPorNoDisponibilidadDeCeldas() {
+		
+		int cantidadCarrosParqueados = 25;
+		String placaVehiculo = "MSD12D";
+		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
+		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca(placaVehiculo);
+		Vehiculo vehiculoTest = vehiculoBuilder.build();
+		
+		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(cantidadCarrosParqueados);
+		
+		try {
+			servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+			fail();
+		} catch (Exception e) {
+			assertEquals(ParqueaderoServicio.NO_HAY_CELDAS_DISPONIBLES , e.getMessage());
+		}
+		
+	}
+	
+	@Test
 	public void testValidarTarifaMoto6Horas() {
 		
 		int horas = 6;

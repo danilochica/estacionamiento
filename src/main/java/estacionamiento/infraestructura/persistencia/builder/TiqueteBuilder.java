@@ -20,6 +20,6 @@ public final class TiqueteBuilder {
 		return new TiqueteEntidad(tiquete.getIdTiquete(), tiquete.getFechaIngreso(), tiquete.getFechaSalida(), tiquete.getValorServicio(), tiquete.getEstadoRegistro(), vehiculoEntidad);
 		 
 	}
-	
+
 
 }
