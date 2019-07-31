@@ -8,17 +8,17 @@ import estacionamiento.infraestructura.persistencia.entidad.VehiculoEntidad;
 
 public final class TiqueteBuilder {
 	
-	public static  Tiquete convertirAModelo(TiqueteEntidad tiqueteEntidad) {
+	public static Tiquete convertirAModelo(TiqueteEntidad tiqueteEntidad) {
 		Vehiculo vehiculoDTO = VehiculoBuilder.convertirAModelo(tiqueteEntidad.getIdVehiculo());
-		Tiquete tiquete = new Tiquete(tiqueteEntidad.getIdTiquete(), tiqueteEntidad.getRegistroIngreso(), tiqueteEntidad.getRegistroSalida(),  tiqueteEntidad.getValorServicio(), tiqueteEntidad.getEstado(),vehiculoDTO);
-		return tiquete;
+		return new Tiquete(tiqueteEntidad.getIdTiquete(), tiqueteEntidad.getRegistroIngreso(), tiqueteEntidad.getRegistroSalida(),  tiqueteEntidad.getValorServicio(), tiqueteEntidad.getEstado(),vehiculoDTO);
+	
 	}
 	
 	public static TiqueteEntidad convertirAEntidad(Tiquete tiquete) {
 		VehiculoEntidad vehiculoEntidad = VehiculoBuilder.convertirAEntidad(tiquete.getVehiculo());
 		
-		TiqueteEntidad parqueaderoEntidad = new TiqueteEntidad(tiquete.getIdTiquete(), tiquete.getFechaIngreso(), tiquete.getFechaSalida(), tiquete.getValorServicio(), tiquete.getEstadoRegistro(), vehiculoEntidad);
-		return parqueaderoEntidad;
+		return new TiqueteEntidad(tiquete.getIdTiquete(), tiquete.getFechaIngreso(), tiquete.getFechaSalida(), tiquete.getValorServicio(), tiquete.getEstadoRegistro(), vehiculoEntidad);
+		 
 	}
 	
 
