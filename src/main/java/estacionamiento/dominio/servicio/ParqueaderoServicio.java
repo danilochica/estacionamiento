@@ -139,13 +139,19 @@ public class ParqueaderoServicio {
 		return valorTotalServicio;
 	}
 	
+	public Tiquete consultarVehiculoPorPlaca(String placa) {
+		return consultarVehiculoPorPlacaParqueado(placa);
+				
+	}
+	
 	public Tiquete registrarSalidaVehiculo(String placa) {
 		
 		int dias = 0;
 		int horas = 0;
 		
+		Tiquete registroVehiculoParqueadoPorPlaca = consultarVehiculoPorPlaca(placa);
+		
 		Date registroSalidaVehiculo = calendarioServicio.obtenerfechaAtual();
-		Tiquete registroVehiculoParqueadoPorPlaca = consultarVehiculoPorPlacaParqueado(placa);
 		registroVehiculoParqueadoPorPlaca.setFechaSalida(registroSalidaVehiculo);
 
 		int diferencia = diferenciaEntreFechas(registroVehiculoParqueadoPorPlaca.getFechaSalida(), registroVehiculoParqueadoPorPlaca.getFechaIngreso());
@@ -161,8 +167,8 @@ public class ParqueaderoServicio {
         }
         
         BigDecimal valorServicio = calcularValorServicio(registroVehiculoParqueadoPorPlaca.getVehiculo().getTipoVehiculo(), registroVehiculoParqueadoPorPlaca.getVehiculo().getCilindraje(), dias, horas);
-        Tiquete vehiculoParaSalir = new Tiquete(registroVehiculoParqueadoPorPlaca.getIdTiquete(), registroVehiculoParqueadoPorPlaca.getFechaIngreso(), registroVehiculoParqueadoPorPlaca.getFechaSalida(), valorServicio, false, registroVehiculoParqueadoPorPlaca.getVehiculo());
-        Tiquete registroProcedimientoSalidaTerminado = tiqueteRepositorio.regitrarSalidaVehiculoDelParqueadero(vehiculoParaSalir);
+        Tiquete vehiculoListoParaSalir = new Tiquete(registroVehiculoParqueadoPorPlaca.getIdTiquete(), registroVehiculoParqueadoPorPlaca.getFechaIngreso(), registroVehiculoParqueadoPorPlaca.getFechaSalida(), valorServicio, false, registroVehiculoParqueadoPorPlaca.getVehiculo());
+        Tiquete registroProcedimientoSalidaTerminado = tiqueteRepositorio.regitrarSalidaVehiculoDelParqueadero(vehiculoListoParaSalir);
 
         return registroProcedimientoSalidaTerminado;
 

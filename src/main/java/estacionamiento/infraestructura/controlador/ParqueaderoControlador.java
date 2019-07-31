@@ -2,6 +2,8 @@ package estacionamiento.infraestructura.controlador;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +17,7 @@ import estacionamiento.aplicacion.manejadores.ManejadorServicioParqueadero;
 import estacionamiento.dominio.modelo.Tiquete;
 import estacionamiento.dominio.modelo.Vehiculo;
 
-@CrossOrigin(origins = { "*" })
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/parqueadero")
 public class ParqueaderoControlador {
@@ -27,23 +29,20 @@ public class ParqueaderoControlador {
 	}
 
 	@PostMapping
-	public Tiquete registrarIngresoDelVehiculoAlParqueadero(@RequestBody Vehiculo vehiculoDTO) {
-		Tiquete tiqueteVehiculoIngresado =  servicioParqueadero.ingresarVehiculoAlPaqueadero(vehiculoDTO);
-		return tiqueteVehiculoIngresado;
+	public ResponseEntity<Tiquete> registrarIngresoDelVehiculoAlParqueadero(@RequestBody Vehiculo vehiculoDTO) {
+		return new ResponseEntity<> (servicioParqueadero.ingresarVehiculoAlPaqueadero(vehiculoDTO), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/vehiculosParqueados")
-	public List<Tiquete>  obtenerVehiculosParqueados(){
-		List<Tiquete> vehiculosParqueados = servicioParqueadero.listaVehiculosParqueados();
-		return vehiculosParqueados;
+	@GetMapping
+	public ResponseEntity<List<Tiquete>>  obtenerVehiculosParqueados(){
+		return new ResponseEntity<>(servicioParqueadero.listaVehiculosParqueados(), HttpStatus.OK);
 	}
 	
-	
-	@PutMapping(value = "/registrarSalida/{placa}")
-	public Tiquete registrarSalidaVehiculo(@PathVariable String placa) {
 		
-		Tiquete registroSalidaVehiculo = servicioParqueadero.registraSalidaVehiculo(placa);
-		return registroSalidaVehiculo;
+	@PutMapping(value = "/registrarSalida/{placa}")
+	public ResponseEntity<Tiquete>  registrarSalidaVehiculo(@PathVariable String placa) {
+		Tiquete tiquete = servicioParqueadero.registraSalidaVehiculo(placa);
+		return new ResponseEntity<>(tiquete , HttpStatus.OK);
 	}
 	
 

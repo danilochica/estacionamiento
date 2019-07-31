@@ -22,7 +22,6 @@ public class TiqueteEntidad implements Serializable{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column (name = "ID_TIQUETE", unique = true, nullable = false)
 	private Long idTiquete;
 	

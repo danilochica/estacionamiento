@@ -60,7 +60,7 @@ public class ServicioParqueaderoTestIntegracion {
 	@Test
 	public void testObtenerVehiculosParqueados() throws Exception {
 		
-		mockMvc.perform(get("/parqueadero/vehiculosParqueados")
+		mockMvc.perform(get("/parqueadero")
 				.contentType(MediaType.APPLICATION_JSON))				
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
@@ -69,12 +69,14 @@ public class ServicioParqueaderoTestIntegracion {
 	
 	@Test
 	public void testSalidaParqueadero() throws Exception {
-		String placaRegistrada = "AAA000";
+		String placaRegistrada = "AAA003";
 		
 		mockMvc.perform(put("/parqueadero/registrarSalida/{placa}", placaRegistrada))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-			.andExpect(jsonPath("$.estadoRegistro").value(false));
+			.andExpect(jsonPath("$.estadoRegistro").value(false))
+			.andExpect(jsonPath("$.valorServicio").isNotEmpty())
+			.andExpect(jsonPath("$.fechaSalida").isNotEmpty());
 			
 	}
 
