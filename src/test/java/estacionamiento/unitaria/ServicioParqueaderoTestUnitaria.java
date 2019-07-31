@@ -13,12 +13,14 @@ import java.util.Date;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import estacionamiento.dominio.modelo.Tiquete;
 import estacionamiento.dominio.modelo.Vehiculo;
 import estacionamiento.dominio.modelo.VehiculoEnum;
 import estacionamiento.dominio.repositorio.TiqueteRepositorio;
 import estacionamiento.dominio.repositorio.VehiculoRepositorio;
 import estacionamiento.dominio.servicio.CalendarioServicio;
 import estacionamiento.dominio.servicio.ParqueaderoServicio;
+import estacionamiento.testdatabuider.TiqueteTestDataBuilder;
 import estacionamiento.testdatabuider.VehiculoTestDataBuilder;
 
 public class ServicioParqueaderoTestUnitaria {
@@ -50,6 +52,24 @@ public class ServicioParqueaderoTestUnitaria {
 		assertEquals(CILINDRAJE, vehiculo.getCilindraje(),0);
 		
 	}
+	
+	@Test
+	public void crearTiqueteTest() {
+		
+		VehiculoTestDataBuilder vehiculoTestDataBuilder = new VehiculoTestDataBuilder().conPlaca(PLACA_CON_LETRA_A).conTipoVehiculo(TIPO_VEHICULO_MOTO).conCilindraje(CILINDRAJE);
+		Vehiculo vehiculo = vehiculoTestDataBuilder.build();	
+		
+		TiqueteTestDataBuilder tiqueteTestDataBuilder = new TiqueteTestDataBuilder().conEstadoRegistro(true).conVehiculo(vehiculo).conFechaDeIngreso(new Date(2019-07-23));
+		Tiquete tiquete = tiqueteTestDataBuilder.build();
+		
+		assertEquals(PLACA_CON_LETRA_A, tiquete.getVehiculo().getPlaca());
+		assertEquals(TIPO_VEHICULO_MOTO, tiquete.getVehiculo().getTipoVehiculo());
+		assertEquals(CILINDRAJE,tiquete.getVehiculo().getCilindraje(),0);
+		assertEquals(true,tiquete.getEstadoRegistro());
+		assertEquals(new Date(2019-07-23),tiquete.getFechaIngreso());
+		
+	}
+	
 	
 	@Test
 	public void testVehiculoPlacaConLetraInicialIgualA() {
