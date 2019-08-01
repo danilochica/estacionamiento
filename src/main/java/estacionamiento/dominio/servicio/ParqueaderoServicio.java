@@ -58,11 +58,6 @@ public class ParqueaderoServicio {
 		char letraInicial = Character.toUpperCase(placa.charAt(0));
 		return String.valueOf(letraInicial).equals(LETRA_INICIAL_PLACA);
 	}
-	
-	
-	public boolean existeVehiculoParqueado (String placa) {
-		return  consultarVehiculoPorPlacaParqueado(placa) == null ? false : true;
-	}
 
 	public Tiquete registrarIngresoVehiculoAlParqueadero(Vehiculo vehiculo) {
 		
@@ -166,7 +161,7 @@ public class ParqueaderoServicio {
         
         if(diferencia>SEGUNDOS_HORA) {
         	horas = calcularDiferenciaEnHoras(diferencia);
-            diferencia =  diferencia-(dias*SEGUNDOS_HORA);
+            
         }
         
         BigDecimal valorServicio = calcularValorServicio(registroVehiculoParqueadoPorPlaca.getVehiculo().getTipoVehiculo(), registroVehiculoParqueadoPorPlaca.getVehiculo().getCilindraje(), dias, horas);
