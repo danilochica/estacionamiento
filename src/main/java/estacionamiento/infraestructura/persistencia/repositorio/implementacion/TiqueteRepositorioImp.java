@@ -46,17 +46,14 @@ public class TiqueteRepositorioImp implements TiqueteRepositorio{
 	@Override
 	public List<Tiquete> listaVehiculosParqueados() {
 		List<TiqueteEntidad> resultadoConsulta = repositorioJPA.vehiculosParqueados();
-		List<Tiquete> vehiculosParqueados = 
-				resultadoConsulta.stream().map(TiqueteBuilder::convertirAModelo).collect(Collectors.toList());
-		return vehiculosParqueados;
+		return resultadoConsulta.stream().map(TiqueteBuilder::convertirAModelo).collect(Collectors.toList());
 	}
 
 	@Override
 	public Tiquete regitrarSalidaVehiculoDelParqueadero(Tiquete tiquete) {
 		TiqueteEntidad tiqueteEntidad = TiqueteBuilder.convertirAEntidad(tiquete);
 		TiqueteEntidad registroModificado = repositorioJPA.save(tiqueteEntidad);
-		Tiquete registroAlmacenado = TiqueteBuilder.convertirAModelo(registroModificado);
-		return registroAlmacenado;
+		return TiqueteBuilder.convertirAModelo(registroModificado);
 	}
 
 }
