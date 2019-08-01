@@ -26,6 +26,7 @@ public class ParqueaderoServicio {
 	public static final String PLACA_INICIA_CON_A = "No puede ingresar porque no esta en un dia habil";
 	public static final String NO_HAY_CELDAS_DISPONIBLES ="No hay celdas disponibles";
 	public static final String VEHICULO_NO_REGISTRADO ="No hay celdas disponibles";
+	public static final String PLACA_REPETIDA ="El vehiculo ya esta registrado";
 	
 	
 	TiqueteRepositorio tiqueteRepositorio;
@@ -58,6 +59,10 @@ public class ParqueaderoServicio {
 		return String.valueOf(letraInicial).equals(LETRA_INICIAL_PLACA);
 	}
 	
+	
+	public boolean existeVehiculoParqueado (String placa) {
+		return  consultarVehiculoPorPlacaParqueado(placa) == null ? false : true;
+	}
 
 	public Tiquete registrarIngresoVehiculoAlParqueadero(Vehiculo vehiculo) {
 		
@@ -73,29 +78,27 @@ public class ParqueaderoServicio {
 		}
 		
 		Vehiculo vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculo);
-		Tiquete tiqueteGenerado = generarTiqueteDeIngreso(vehiculoGuardado);
+		generarTiqueteDeIngreso(vehiculoGuardado);
 			
-		return tiqueteGenerado;
+		return generarTiqueteDeIngreso(vehiculoGuardado);
 		
 	}
 
 	public Tiquete generarTiqueteDeIngreso(Vehiculo vehiculoDTO) {
 		Tiquete gestionParqueaderoDTO = new Tiquete(calendarioServicio.obtenerfechaAtual(), true, vehiculoDTO);
-		Tiquete registroAlmacenado = tiqueteRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
-		
-		return registroAlmacenado;
+				
+		return tiqueteRepositorio.registarIngresoVehiculoAlParqueadero(gestionParqueaderoDTO);
 		
 	}
 	
 	public List<Tiquete> listarVehiculosParqueados(){
-		 List<Tiquete> vehiculosParqueados = tiqueteRepositorio.listaVehiculosParqueados();
-		 return vehiculosParqueados;
+		
+		 return tiqueteRepositorio.listaVehiculosParqueados();
 	}
 	
 	
 	public Tiquete consultarVehiculoPorPlacaParqueado(String placa) {
-		Tiquete consultaVehiculo = tiqueteRepositorio.consultarVehiculoParqueadoPorPlaca(placa);
-		return consultaVehiculo;
+		return tiqueteRepositorio.consultarVehiculoParqueadoPorPlaca(placa);
 		
 	}
 	
@@ -168,9 +171,8 @@ public class ParqueaderoServicio {
         
         BigDecimal valorServicio = calcularValorServicio(registroVehiculoParqueadoPorPlaca.getVehiculo().getTipoVehiculo(), registroVehiculoParqueadoPorPlaca.getVehiculo().getCilindraje(), dias, horas);
         Tiquete vehiculoListoParaSalir = new Tiquete(registroVehiculoParqueadoPorPlaca.getIdTiquete(), registroVehiculoParqueadoPorPlaca.getFechaIngreso(), registroVehiculoParqueadoPorPlaca.getFechaSalida(), valorServicio, false, registroVehiculoParqueadoPorPlaca.getVehiculo());
-        Tiquete registroProcedimientoSalidaTerminado = tiqueteRepositorio.regitrarSalidaVehiculoDelParqueadero(vehiculoListoParaSalir);
 
-        return registroProcedimientoSalidaTerminado;
+        return tiqueteRepositorio.regitrarSalidaVehiculoDelParqueadero(vehiculoListoParaSalir);
 
 	}
 	

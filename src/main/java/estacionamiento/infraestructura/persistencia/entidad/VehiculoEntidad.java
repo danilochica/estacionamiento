@@ -24,7 +24,7 @@ public class VehiculoEntidad implements Serializable {
 	@Column(name = "TIPO_VEHICULO", nullable = false)
 	private String tipoVehiculo;
 	
-	@Column(name = "CILINDRAJE", nullable = false)
+	@Column(name = "CILINDRAJE", nullable = true)
 	private int cilindraje;
 	
 	@Column(name = "PLACA", nullable = false)

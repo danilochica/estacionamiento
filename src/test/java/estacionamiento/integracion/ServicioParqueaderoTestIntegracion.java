@@ -40,27 +40,11 @@ public class ServicioParqueaderoTestIntegracion {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
-	@Test
-	public void testCuandoSeAlmacenaUnCarro() throws Exception {
-		
-		String placaRegistrada = "ZZZ999";
-		String tipoVehiculo= "Carro";
-		int cilindraje = 400;
-		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada).conTipoVehiculo(tipoVehiculo).conCilindraje(cilindraje);
-		Vehiculo vehiculoTest = vehiculoBuilder.build();
-		
-		mockMvc.perform(post("/parqueadero")
-				.content(new ObjectMapper().writeValueAsString(vehiculoTest))
-				.contentType(MediaType.APPLICATION_JSON))				
-				.andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-				.andExpect(jsonPath("$.vehiculo.placa").value(placaRegistrada));
-	}
-	
+
 	@Test
 	public void testCuandoSeAlmacenaUnaMoto() throws Exception {
 		
-		String placaRegistrada = "ZZZ99Z";
+		String placaRegistrada = "KEQ99D";
 		String tipoVehiculo= "Moto";
 		int cilindraje = 400;
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conPlaca(placaRegistrada).conTipoVehiculo(tipoVehiculo).conCilindraje(cilindraje);
