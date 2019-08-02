@@ -201,14 +201,14 @@ public class ServicioParqueaderoTestUnitaria {
 		
 		int cantidadCarrosParqueados = 25;
 		String placaVehiculo = "MSD12D";
-		ParqueaderoServicio servicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
+		ParqueaderoServicio parqueaderoServicio = new ParqueaderoServicio(tiqueteRepositorio, vehiculoRepositorio,calendarioServicio);
 		VehiculoTestDataBuilder vehiculoBuilder = new VehiculoTestDataBuilder().conTipoVehiculo(TIPO_VEHICULO_CARRO).conPlaca(placaVehiculo);
 		Vehiculo vehiculoTest = vehiculoBuilder.build();
 		
-		when(servicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(cantidadCarrosParqueados);
+		when(parqueaderoServicio.cantidadCeldasOcupadasPorTipoVehiculo(TIPO_VEHICULO_CARRO)).thenReturn(cantidadCarrosParqueados);
 		
 		try {
-			servicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
+			parqueaderoServicio.registrarIngresoVehiculoAlParqueadero(vehiculoTest);
 			fail();
 		} catch (Exception e) {
 			assertEquals(ParqueaderoServicio.NO_HAY_CELDAS_DISPONIBLES , e.getMessage());
