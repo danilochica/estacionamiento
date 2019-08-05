@@ -73,7 +73,6 @@ public class ParqueaderoServicio {
 		}
 		
 		Vehiculo vehiculoGuardado = vehiculoRepositorio.registrarVehiculoEnElSistema(vehiculo);
-		generarTiqueteDeIngreso(vehiculoGuardado);
 			
 		return generarTiqueteDeIngreso(vehiculoGuardado);
 		
